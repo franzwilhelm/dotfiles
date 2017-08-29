@@ -1,0 +1,106 @@
+###########################################
+#             GENERAL SETTINGS            #
+###########################################
+set $bg-color #2d2d2d
+set $script-path ~/.config/i3/scripts
+font                pango:monospace 8
+set $mod            Mod4
+floating_modifier   $mod
+
+exec synclient HorizEdgeScroll=1 VertEdgeScroll=1 VertScrollDelta=-111
+exec_always compton -f
+exec_always bash $script-path/download_watcher.sh 
+
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Escape exec bash $script-path/lock.sh
+
+bar {
+        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+        tray_output primary
+	colors {
+		background $bg-color
+	}
+}
+
+###########################################
+#             FUNCTION KEYS               #
+###########################################
+exec gksu chown franz /sys/class/backlight/intel_backlight/brightness
+exec gksu chown franz /sys/class/leds/asus::kbd_backlight/brightness
+exec echo 900 > /sys/class/backlight/intel_backlight/brightness
+
+#audio
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 10%+
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 10%-
+bindsym XF86AudioMute        exec amixer -D pulse sset Master 0%
+
+#screen brightness
+bindsym XF86MonBrightnessUp     exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) + 50)) > /sys/class/backlight/intel_backlight/brightness
+bindsym XF86MonBrightnessDown   exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) - 50)) > /sys/class/backlight/intel_backlight/brightness
+#keyboard backlight
+bindsym XF86KbdBrightnessUp     exec echo $(($(cat /sys/class/leds/asus::kbd_backlight/brightness) + 1))    > /sys/class/leds/asus::kbd_backlight/brightness
+bindsym XF86KbdBrightnessDown   exec echo $(($(cat /sys/class/leds/asus::kbd_backlight/brightness) - 1))    > /sys/class/leds/asus::kbd_backlight/brightness
+
+#bindsym XF86TouchpadToggle exec /some/path/toggletouchpad.sh # toggle touchpad
+
+###########################################
+#              APP SHORTCUTS              #
+###########################################
+bindsym $mod+space  exec rofi -show run -lines 3 -eh 2 -width 100 -padding 480 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd"
+bindsym $mod+Return exec "i3-sensible-terminal"
+bindsym $mod+c      exec "chromium-browser"
+bindsym $mod+s      exec "slack"
+bindsym $mod+t      exec "notes-up"
+bindsym $mod+z      exec "gnome-control-center"
+# screenshots
+bindsym Print       exec "shutter -s"
+bindsym $mod+Print  exec "shutter -w"
+
+###########################################
+#            WINDOW MODIFIERS             #
+###########################################
+bindsym $mod+x            kill
+
+# focus
+bindsym $mod+Alt+Left     focus left
+bindsym $mod+Alt+Right    focus right
+
+# move
+bindsym $mod+Shift+Left   move left
+bindsym $mod+Shift+Down   move down
+bindsym $mod+Shift+Up     move up
+bindsym $mod+Shift+Right  move right
+
+bindsym $mod+Up           fullscreen toggle
+
+# resize
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym Left    resize shrink width 10 px or 10 ppt
+        bindsym Down    resize grow height 10 px or 10 ppt
+        bindsym Up      resize shrink height 10 px or 10 ppt
+        bindsym Right   resize grow width 10 px or 10 ppt
+        bindsym Return  mode "default"
+        bindsym Escape  mode "default"
+}
+
+###########################################
+#               WORKSPACES                #
+###########################################
+bindsym $mod+Left       workspace prev
+bindsym $mod+Right      workspace next
+
+# move containers
+bindsym $mod+1          move container to workspace 1
+bindsym $mod+2          move container to workspace 2
+bindsym $mod+3          move container to workspace 3
+bindsym $mod+4          move container to workspace 4
+bindsym $mod+Ctrl+Right move container to workspace next;workspace next
+bindsym $mod+Ctrl+Left  move container to workspace prev;workspace prev
+
+# change container layout
+bindsym $mod+e        layout tabbed
+bindsym $mod+w        layout toggle split
+bindsym $mod+Shift+t  floating toggle
