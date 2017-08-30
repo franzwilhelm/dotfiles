@@ -7,8 +7,10 @@ font                pango:monospace 8
 set $mod            Mod4
 floating_modifier   $mod
 
-exec synclient HorizEdgeScroll=1 VertEdgeScroll=1 VertScrollDelta=-111
+exec xinput set-prop 14 290 -111 -111
+exec xinput set-prop 14 292 1 1
 exec_always compton -f
+
 exec_always bash $script-path/download_watcher.sh 
 
 bindsym $mod+Shift+c reload
@@ -39,6 +41,7 @@ bindsym XF86AudioMute        exec amixer -D pulse sset Master 0%
 #screen brightness
 bindsym XF86MonBrightnessUp     exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) + 50)) > /sys/class/backlight/intel_backlight/brightness
 bindsym XF86MonBrightnessDown   exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) - 50)) > /sys/class/backlight/intel_backlight/brightness
+
 #keyboard backlight
 bindsym XF86KbdBrightnessUp     exec echo $(($(cat /sys/class/leds/asus::kbd_backlight/brightness) + 1))    > /sys/class/leds/asus::kbd_backlight/brightness
 bindsym XF86KbdBrightnessDown   exec echo $(($(cat /sys/class/leds/asus::kbd_backlight/brightness) - 1))    > /sys/class/leds/asus::kbd_backlight/brightness
@@ -54,6 +57,7 @@ bindsym $mod+c      exec "chromium-browser"
 bindsym $mod+s      exec "slack"
 bindsym $mod+t      exec "notes-up"
 bindsym $mod+z      exec "gnome-control-center"
+bindsym $mod+d      exec "pantheon-files Downloads"
 # screenshots
 bindsym Print       exec "shutter -s"
 bindsym $mod+Print  exec "shutter -w"
