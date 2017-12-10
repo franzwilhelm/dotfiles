@@ -1,0 +1,78 @@
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
+google2() {
+	w3m 'https://www.google.no/search?q='$1
+}
+google() {
+	xdg-open 'https://www.google.no/search?q='$1
+}
+docs() {
+url="$1"
+case $url in
+"moment") url="https://momentjs.com/docs/";;
+"gorm")   url="http://jinzhu.me/gorm/models.html";;
+"synq")   url="https://docs.synq.fm/api/#!/video/query";; 
+*)        echo "No docs found for '"$url"'";google $url" documentation";return 0;;
+esac
+xdg-open $url
+}
+
+online() {
+curl --output /dev/null --silent --head --fail $1
+if [ "$?" != "7" ]; then
+        echo "yes"
+else
+	echo "no"
+fi
+}
+gittern() {
+	uri="https://github.com/"`git remote -v | grep -Pi $1 | grep -oPi '((?<=github.com:)|(?<=github.com/))\w*\/.*(?=\.git \(fetch\))'`
+	chromium-browser $uri
+}
+
+#env variables
+export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/PROGRAMMERING/GO
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+
+# Ubuntu make installation of Ubuntu Make binary symlink
+PATH=/home/franz/.local/share/umake/bin:$PATH
+
+#config files
+alias profile="vim ~/.profile; source ~/.profile"
+alias i3conf="vim ~/.config/i3/config"
+
+#shortcuts
+alias c="clear"
+alias p="cd ~/PROGRAMMERING"
+alias sc="cd ~/Documents/scripts"
+alias b="bee run -gendoc=true -downdoc=true"
+alias makeconf="vim ~/.config/Makefile"
+#stempl
+alias stemplssh="ssh root@139.59.187.76"
+alias spa="p; cd stempl-spa/; atom src; npm run dev;"
+alias s="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; atom ."
+
+#teston
+alias tspa="p; cd TESTON/teston-spa/; atom src; npm run dev;"
+alias t="cd $GOPATH/src/github.com/teston/teston-api;atom .;bee run"
+
+#network & postgres
+alias fixnet="sudo systemctl restart NetworkManager.service"
+alias fixpg="sudo systemctl restart postgresql"
+alias pg="sudo -u postgres psql"
+
+alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
+alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness"
+alias ifi="ssh fwlippe@login.ifi.uio.no"
+alias wf="ruby ~/Documents/scripts/wolfram.rb"
+
+echo "Profile successfully loaded"
