@@ -84,10 +84,9 @@ golang:
 	- sudo rm $(GO_TAR)
 
 scheme:
-	- sudo mkdir -p ~/PROGRAMMERING/GO
-	- sudo curl -O https://storage.googleapis.com/golang/$(GO_TAR)
-	- sudo tar -C /usr/local -xzf $(GO_TAR)
-	- sudo rm $(GO_TAR)
+	- sudo add-apt-repository ppa:plt/racket
+	- sudo apt-get update
+	- sudo apt-get install racket
 
 gcloud:
 	- curl https://sdk.cloud.google.com | bash
@@ -98,19 +97,31 @@ editors:
 	# ATOM
 	- sudo add-apt-repository ppa:webupd8team/atom
 	- sudo apt-get update
-	- sudo apt-get install atom
+	- sudo apt-get install -y atom
 	# INTELLIJ - requires install by going to /usr/local/your_ij_installation/bin and running ./install.sh
 	- sudo curl -O https://download-cf.jetbrains.com/idea/$(IJ_TAR)
 	- sudo tar -C /usr/local -xzf $(IJ_TAR)
 	- sudo rm $(IJ_TAR)
 	# VIM
-	- sudo apt-get install vim
+	- sudo apt-get install -y vim
+
+latex:
+	- sudo apt-get install -y latexmk
+	- sudo apt-get install -y texlive-latex-recommended
 
 databases:
 	# POSTGRES
 	- sudo apt-get install postgresql postgresql-contrib
 	# MYSQL
 	- sudo apt-get install mysql-client mysql-server
+
+docker:
+	- sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+	- sudo chmod +x /usr/local/bin/docker-compose
+	- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+	- sudo apt-get update
+	- sudo apt-get install -y docker-ce
 
 browsers:
 	- sudo apt-get update
@@ -128,3 +139,10 @@ browsers:
 	- sudo sh -c 'echo "deb http://deb.opera.com/opera-stable/ stable non-free" >> /etc/apt/sources.list.d/opera.list'
 	- sudo apt-get update
 	- sudo apt-get install -y opera
+
+spotify:
+	- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+	- echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+	- sudo apt-get update -y
+	- sudo apt-get install -y spotify-client
+
