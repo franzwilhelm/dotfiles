@@ -21,4 +21,6 @@ if [ $BLOCK_BUTTON == 1 ]; then
 	xdg-open $url
 fi
 
-echo "<span color='white'>${api:6:-4} ($out)</span>"
+if [ "$out" != "" ]; then
+	echo "<span color='white'>${api:6:-4} ($out)</span>"
+fi

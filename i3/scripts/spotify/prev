@@ -1,0 +1,10 @@
+#!/bin/bash
+SPOTIFY_PID=`pgrep spotify | head -1 | tail -1`
+
+if [ $SPOTIFY_PID ]; then
+  echo "◀◀"
+fi
+
+if [ $BLOCK_BUTTON == 1 ]; then
+  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+fi

@@ -1,0 +1,6 @@
+#!/bin/bash
+echo "Spotify"
+# Check if spotify is running
+if [ $BLOCK_BUTTON == 1 ]; then
+  spotify
+fi

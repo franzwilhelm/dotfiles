@@ -1,0 +1,12 @@
+#!/bin/bash
+raw=`cat /sys/class/backlight/intel_backlight/brightness`
+brightness=$((raw / 10 + 10))
+icon="<span color='#f4ff66'><b>☀</b></span>"
+echo "$icon $brightness%"
+
+if [ $BLOCK_BUTTON == 1 ]; then
+	status=`pkill redshift`
+	if $status; then
+		redshift&
+	fi
+fi

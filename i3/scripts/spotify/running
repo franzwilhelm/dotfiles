@@ -1,0 +1,22 @@
+#!/bin/bash
+SPOTIFY_PID=`pgrep spotify | head -1 | tail -1`
+
+if [ $SPOTIFY_PID ]; then
+  # Get song name
+  WINDOW_ID=`xdotool search --pid $SPOTIFY_PID | head -2 | tail -1`
+  SONGNAME=`xdotool getwindowname $WINDOW_ID`
+  # Random icon
+  ICON="<span color='#41873f'>▶</span>"
+
+  # If SONGNAME is "Spotify" it's not playing
+  if [ "$SONGNAME" == "Spotify" ]; then
+    echo "$ICON"
+  else
+    echo "$SONGNAME"
+  fi
+
+  # Click event
+  if [ $BLOCK_BUTTON == 1 ]; then
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+  fi
+fi

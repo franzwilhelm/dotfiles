@@ -1,0 +1,22 @@
+#!/bin/bash
+PERCENT=`acpi -b | grep -oP '[0-9]*(?=%)'`
+STATUS=`acpi -b | grep -oP '(?<=: )[A-Za-z]*'`
+COLORPRINT="<span color='%s'>%s</span>%s"
+COLOR="#8ff442"
+
+if [ "$STATUS" == "Charging" ]; then
+  ICON=`printf "$COLORPRINT" "yellow" "<b>⚡</b>"`
+  COLOR="#FFFFFF"
+elif (( $PERCENT > 90 )); then ICON=""
+elif (( $PERCENT > 60 )); then ICON=""
+elif (( $PERCENT > 40 )); then ICON="";
+elif (( $PERCENT > 30 )); then ICON=""; COLOR="#ebf442"
+elif (( $PERCENT > 15 )); then ICON=""; COLOR="#ffa25b"
+elif (( $PERCENT > 5 ));  then ICON=""; COLOR="#ff5b5b"
+else
+  COLOR="#FFFFFF"
+  ICON=" Nå rakner det snart:"
+  printf "$COLORPRINT" "$COLOR" "$ICON " "$PERCENT%"
+  exit 33
+fi
+printf "$COLORPRINT" "$COLOR" "$ICON " "$PERCENT%"

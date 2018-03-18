@@ -1,36 +1,56 @@
 ###########################################
 #             GENERAL SETTINGS            #
 ###########################################
-set $bg-color #2d2d2d
-set $script-path ~/.config/i3/scripts
-font                pango:monospace 8
+set $bg-color #21252b
+set $configpath ~/.config/i3
+set $scriptpath $configpath/scripts
+font                pango:Open Sans 10 9
 set $mod            Mod4
 floating_modifier   $mod
+client.focused      $bg-color $bg-color #ffffff $bg-color   $bg-color
 
-exec xinput set-prop 14 290 -111 -111
-exec xinput set-prop 14 292 1 1
-exec_always compton -f
+# mousepad natural scrolling and horizontal scrolling
+exec_always xinput set-prop 13 290 -111 -111
+exec_always xinput set-prop 13 292 1 1
+exec_always xinput set-prop 14 290 -111 -111
+exec_always xinput set-prop 14 292 1 1
 
-exec_always bash $script-path/download_watcher.sh 
+# clone monitor
+exec_always xrandr --output DP-1 --mode 1920x1080 --output eDP-1 --primary --scale-from 1920x1080
 
+# compton & download_watcher
+exec_always compton --config $configpath/compton.conf
+exec_always feh --bg-scale Pictures/Bakgrunnsbilder/Danmark.jpg
+exec_always bash $scriptpath/download_watcher.sh
+
+# i3 reload/restart/quit + lock & bar settings
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Escape exec bash $script-path/lock.sh
+bindsym $mod+Escape exec bash $scriptpath/lock.sh
 
 bar {
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        tray_output primary
-	colors {
-		background $bg-color
-	}
+  status_command SCRIPT_DIR=~/.config/i3/scripts i3blocks -c ~/.config/i3/i3blocks.conf
+  tray_output primary
+  colors {
+    background $bg-color
+    statusline #ffffff
+    separator #666666
+
+    focused_workspace  #56b6c2 $bg-color #56b6c2
+    active_workspace   #c678dd $bg-color #c678dd
+    inactive_workspace #333333 #222222 #888888
+    urgent_workspace   #2f343a #900000 #ffffff
+    binding_mode       #2f343a #900000 #ffffff
+  }
+  separator_symbol " "
 }
 
 ###########################################
 #             FUNCTION KEYS               #
 ###########################################
-exec gksu chown franz /sys/class/backlight/intel_backlight/brightness
-exec gksu chown franz /sys/class/leds/asus::kbd_backlight/brightness
+# exec_always gksu chown franz /sys/class/backlight/intel_backlight/brightness
+# exec_always gksu chown franz /sys/class/leds/asus::kbd_backlight/brightness
 exec echo 900 > /sys/class/backlight/intel_backlight/brightness
 
 #audio
@@ -39,8 +59,8 @@ bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 10%-
 bindsym XF86AudioMute        exec amixer -D pulse sset Master 0%
 
 #screen brightness
-bindsym XF86MonBrightnessUp     exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) + 50)) > /sys/class/backlight/intel_backlight/brightness
-bindsym XF86MonBrightnessDown   exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) - 50)) > /sys/class/backlight/intel_backlight/brightness
+bindsym XF86MonBrightnessUp     exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) + 25)) > /sys/class/backlight/intel_backlight/brightness
+bindsym XF86MonBrightnessDown   exec echo $(($(cat /sys/class/backlight/intel_backlight/brightness) - 25)) > /sys/class/backlight/intel_backlight/brightness
 
 #keyboard backlight
 bindsym XF86KbdBrightnessUp     exec echo $(($(cat /sys/class/leds/asus::kbd_backlight/brightness) + 1))    > /sys/class/leds/asus::kbd_backlight/brightness

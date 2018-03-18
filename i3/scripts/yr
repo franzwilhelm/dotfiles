@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# exit on network failure
+if [ "`iwgetid -r`" == "" ]; then
+  exit 0
+fi
+
+FORECAST_URL='http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo_(Blindern)_målestasjon'
+DATA=`curl -s "$FORECAST_URL/varsel.xml"`
+TEMP=`echo "$DATA" | grep -oP '(?<=<temperature unit="celsius" value=")(-)?[0-9]*' | head -1`
+WEATHER=`echo "$DATA" | grep -oP '(?<=<symbol number="1" numberEx="1" name=")[A-Za-zæøå]*' | head -1`
+WIND_SPEED=`echo "$DATA" | grep -oP '(?<=<windSpeed mps=")[0-9]*.[0-9]*' | head -1`
+WIND_NAME=`echo "$DATA" | grep -oP '(?<=<windSpeed mps=")([0-9]*.[0-9]*" name=")[A-Za-zæøå ]*' | grep -oP '(?<=name=").*' | head -1`
+
+DOT="<span color='#48c8f5'><b>⏺</b></span>"
+
+if [[ $BLOCK_BUTTON = 1 ]]; then
+  echo "$DOT $WEATHER: <b>$TEMP°C</b> <i>($WIND_NAME, $WIND_SPEED m/s)</i>"
+elif [ "$BLOCK_BUTTON" == "3" ]; then
+  chromium-browser $FORECAST_URL &
+else
+  echo "$DOT $TEMP°C"
+fi
