@@ -14,9 +14,9 @@ WIND_NAME=`echo "$DATA" | grep -oP '(?<=<windSpeed mps=")([0-9]*.[0-9]*" name=")
 
 DOT="<span color='#48c8f5'><b>⏺</b></span>"
 
-if [[ $BLOCK_BUTTON = 1 ]]; then
+if [ $BLOCK_BUTTON == 1 ]; then
   echo "$DOT $WEATHER: <b>$TEMP°C</b> <i>($WIND_NAME, $WIND_SPEED m/s)</i>"
-elif [ "$BLOCK_BUTTON" == "3" ]; then
+elif [ $BLOCK_BUTTON == 3 ]; then
   chromium-browser $FORECAST_URL &
 else
   echo "$DOT $TEMP°C"
