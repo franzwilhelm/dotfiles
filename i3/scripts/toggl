@@ -8,6 +8,7 @@ fi
 DOT="<span color='#f04c5c'><b>⏺</b></span> <span color='#fff'>toggl</span>"
 
 TOGGL_API_TOKEN="527c14e65d925bfa39fdf59c6fecf67c:api_token"
+# of course this is not my real one, lol
 START_NEW="https://www.toggl.com/api/v8/time_entries/start"
 GET_CURRENT="https://www.toggl.com/api/v8/time_entries/current"
 
