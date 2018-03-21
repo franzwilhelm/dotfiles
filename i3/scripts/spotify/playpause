@@ -1,0 +1,22 @@
+#!/bin/bash
+SPOTIFY_PID=`pgrep spotify | head -1 | tail -1`
+
+if [ $SPOTIFY_PID ]; then
+  STATUS=`dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get string:'org.mpris.MediaPlayer2.Player' string:'PlaybackStatus' | grep -oP '(?<=string ")\w*(?=")'`
+
+  ICON="<span color='%s'>%s</span>"
+
+  # If SONGNAME is "Spotify" it's not playing
+  if [ "$STATUS" == "Playing" ]; then
+    printf "$ICON" "#abb2bf" "◼"
+  elif [ "$STATUS" == "Paused" ]; then
+    printf "$ICON" "#41873f" "▶"
+  else
+    echo "loading"
+  fi
+
+  # Click event
+  if [ "$BLOCK_BUTTON" == "1" ]; then
+    dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause > /dev/null
+  fi
+fi

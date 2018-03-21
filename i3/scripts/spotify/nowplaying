@@ -1,0 +1,23 @@
+#!/bin/bash
+METADATA=`dbus-send --print-reply \
+  --dest=org.mpris.MediaPlayer2.spotify \
+  /org/mpris/MediaPlayer2 org.freedesktop.DBus.Properties.Get \
+  string:'org.mpris.MediaPlayer2.Player' string:'Metadata'`
+
+FMT="<b><span color='%s'>%s</span></b> %s"
+case "$1" in
+  "artist" )
+    DATA=`echo "$METADATA" | grep -A 2 'albumArtist' | tail -1 | grep -oP '(?<=string ").*(?=")'`
+    COLOR="#AB4055"
+    ICON="🗣"
+    ;;
+  "track" )
+    DATA=`echo "$METADATA" | grep -A 1 'title' | tail -1 | grep -oP '(?<=string ").*(?=")'`
+    COLOR="#74E87F"
+    ICON="♫"
+    ;;
+esac
+
+if [ "$DATA" != "" ]; then
+  printf "$FMT" "$COLOR" "$ICON" "$DATA"
+fi
