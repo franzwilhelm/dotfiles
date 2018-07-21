@@ -1,78 +1,125 @@
+#!/bin/bash
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+  # include .bashrc if it exists
+  if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
+  fi
 fi
-google2() {
-	w3m 'https://www.google.no/search?q='$1
-}
-google() {
-	xdg-open 'https://www.google.no/search?q='$1
-}
-docs() {
-url="$1"
-case $url in
-"moment") url="https://momentjs.com/docs/";;
-"gorm")   url="http://jinzhu.me/gorm/models.html";;
-"synq")   url="https://docs.synq.fm/api/#!/video/query";; 
-*)        echo "No docs found for '"$url"'";google $url" documentation";return 0;;
-esac
-xdg-open $url
-}
 
-online() {
-curl --output /dev/null --silent --head --fail $1
-if [ "$?" != "7" ]; then
-        echo "yes"
-else
-	echo "no"
+# include .secrets if it exists
+SECRETS="$HOME/.secrets"
+if [ -f "$SECRETS" ]; then
+  echo "Including secrets from $SECRETS"
+  . $SECRETS
 fi
-}
-gittern() {
-	uri="https://github.com/"`git remote -v | grep -Pi $1 | grep -oPi '((?<=github.com:)|(?<=github.com/))\w*\/.*(?=\.git \(fetch\))'`
-	chromium-browser $uri
-}
 
-#env variables
-export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
+# generic environment variables
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/PROGRAMMERING/GO
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
+export DRONE_SERVER="https://build.teston.no"
+export EDITOR="/usr/bin/atom --wait"
+
+# teston environment variables
+export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
+export TESTON_ENV="dev"
+export TESTON_DIR="~/PROGRAMMERING/projects/teston"
+export TESTON_GO="$GOPATH/src/github.com/teston"
+export TESTON_NLP="$TESTON_DIR/teston-nlp/"
+export TESTON_SPA="$TESTON_DIR/teston-spa/"
+export TESTON_DEVOPS="$TESTON_DIR/teston-devops/"
+export TESTON_CHROME="$TESTON_DIR/teston-chrome-extension/"
+export TESTON_FFMPEG="$TESTON_GO/teston-ffmpeg"
+export TESTON_API="$TESTON_GO/teston-api"
+export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
+export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
+export TESTON_CLI="$TESTON_GO/teston-cli/"
 
 # Ubuntu make installation of Ubuntu Make binary symlink
 PATH=/home/franz/.local/share/umake/bin:$PATH
 
-#config files
-alias profile="vim ~/.profile; source ~/.profile"
-alias i3conf="vim ~/.config/i3/config"
+# config files
+alias profile="atom --wait ~/.profile; source ~/.profile"
+alias secrets="atom --wait ~/.secrets; source ~/.profile"
+alias i3conf="atom ~/.config/i3"
+alias makeconf="vim ~/.config/Makefile"
+alias snippets="atom ~/.atom/snippets.cson"
 
-#shortcuts
+# shortcuts
 alias c="clear"
 alias p="cd ~/PROGRAMMERING"
 alias sc="cd ~/Documents/scripts"
 alias b="bee run -gendoc=true -downdoc=true"
-alias makeconf="vim ~/.config/Makefile"
-#stempl
+alias gogit="cd $GOPATH/src/github.com"
+alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
+alias ifi="ssh fwlippe@login.ifi.uio.no"
+alias get_uio_links="~/.config/i3/scripts/get_uio_links $@"
+alias raspberry="ssh pi@raspberrypi.local"
+alias uvisst="p;cd projects/uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/franzwilhelm/uvisst-api; go install; uvisst-api&;"
+alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
+
+# k8s
+alias k8s="kubectl $@"
+alias k8sprod="gcloud container clusters get-credentials teston-prod-cluster; k8s get pods"
+alias k8sdev="gcloud container clusters get-credentials teston-cluster; k8s get pods"
+
+# screen
+alias kontoret="bash ~/.screenlayout/kontoret.sh"
+alias kontoret2="bash ~/.screenlayout/kontoret2.sh"
+alias universitetet="bash ~/.screenlayout/universitetet.sh"
+alias laptoponly="bash ~/.screenlayout/laptoponly.sh"
+alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
+alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness; sudo chown franz /sys/class/leds/asus::kbd_backlight/brightness"
+
+# stempl
 alias stemplssh="ssh root@139.59.187.76"
 alias spa="p; cd stempl-spa/; atom src; npm run dev;"
 alias s="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; atom ."
 
-#teston
-alias tspa="p; cd TESTON/teston-spa/; atom src; npm run dev;"
-alias t="cd $GOPATH/src/github.com/teston/teston-api;atom .;bee run"
+# teston
+alias teston="go install github.com/teston/teston-cli && teston-cli"
+alias tspa="cd $TESTON_SPA;npm run dev"
+alias tapi="cd $TESTON_API;bee run"
+alias tgames="cd $TESTON_API/../teston-games"
+alias tapidev="cd $TESTON_API;bee rs dev teardown franz && bee rs dev setup franz && bee run"
+alias tps="cd $TESTON_API; bee rs pubsub bold-upgrade-182112"
+alias tffmpeg="cd $TESTON_FFMPEG; go get . && teston-ffmpeg -auth ./google-cloud-pubsub-auth.json bold-upgrade-182112"
+alias tnlp="cd $TESTON_NLP; python main.py"
+alias tdevops="cd $TESTON_DEVOPS"
+alias tchrome="cd $TESTON_CHROME; npm start"
+alias _tcli="cd $TESTON_CLI; atom ."
+alias _tspa="cd $TESTON_SPA; atom ."
+alias _tapi="cd $TESTON_API; atom ."
+alias _tps="cd $TESTON_API_PUBSUB; atom ."
+alias _tffmpeg="cd $TESTON_FFMPEG; atom ."
+alias _tnlp="cd $TESTON_NLP; atom ."
+alias _tchrome="cd $TESTON_CHROME; atom ."
 
-#network & postgres
+# network & postgres
 alias fixnet="sudo systemctl restart NetworkManager.service"
 alias fixpg="sudo systemctl restart postgresql"
 alias pg="sudo -u postgres psql"
 
-alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
-alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness"
-alias ifi="ssh fwlippe@login.ifi.uio.no"
-alias wf="ruby ~/Documents/scripts/wolfram.rb"
+docs() {
+  url="$1"
+  case $url in
+    "moment") url="https://momentjs.com/docs/";;
+    "gorm")   url="http://jinzhu.me/gorm/models.html";;
+    "synq")   url="https://docs.synq.fm/api/#!/video/query";;
+    *)        echo "No docs found for '"$url"'";google $url" documentation";return 0;;
+  esac
+  xdg-open $url
+}
+
+gittern() {
+	uri="https://github.com/"`git remote -v | grep -Pi $1 | grep -oPi '((?<=github.com:)|(?<=github.com/))\w*\/.*(?=\.git \(fetch\))'`
+	chromium-browser $uri
+}
 
 echo "Profile successfully loaded"
+echo "UNIX time: $(date +%s)"

@@ -8,7 +8,7 @@ FMT="<b><span color='%s'>%s</span></b> %s"
 case "$1" in
   "artist" )
     DATA=`echo "$METADATA" | grep -A 2 'albumArtist' | tail -1 | grep -oP '(?<=string ").*(?=")'`
-    COLOR="#AB4055"
+    COLOR="#ff5b5b"
     ICON="🗣"
     ;;
   "track" )

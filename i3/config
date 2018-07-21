@@ -20,7 +20,7 @@ exec_always xrandr --output DP-1 --mode 1920x1080 --output eDP-1 --primary --sca
 
 # compton & download_watcher
 exec_always compton --config $configpath/compton.conf
-exec_always feh --bg-scale Pictures/Bakgrunnsbilder/Danmark.jpg
+exec_always feh --bg-fill ~/Pictures/Bakgrunnsbilder/Danmark.jpg
 exec_always bash $scriptpath/download_watcher.sh
 
 # i3 reload/restart/quit + lock & bar settings
@@ -71,16 +71,17 @@ bindsym XF86KbdBrightnessDown   exec echo $(($(cat /sys/class/leds/asus::kbd_bac
 ###########################################
 #              APP SHORTCUTS              #
 ###########################################
-bindsym $mod+space  exec rofi -show run -lines 3 -eh 2 -width 100 -padding 480 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd"
-bindsym $mod+Return exec "i3-sensible-terminal"
-bindsym $mod+c      exec "chromium-browser"
-bindsym $mod+s      exec "slack"
-bindsym $mod+t      exec "notes-up"
-bindsym $mod+z      exec "gnome-control-center"
-bindsym $mod+d      exec "pantheon-files Downloads"
+bindsym $mod+space   exec rofi -show run -lines 3 -eh 2 -width 100 -padding 480 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd"
+bindsym $mod+Return  exec "i3-sensible-terminal"
+bindsym $mod+c       exec "chromium-browser"
+bindsym $mod+s       exec "slack"
+bindsym $mod+t       exec "notes-up"
+bindsym $mod+comma   exec "gnome-control-center"
+bindsym $mod+h       exec "pantheon-files"
+bindsym $mod+d       exec "pantheon-files Downloads"
 # screenshots
-bindsym Print       exec "shutter -s"
-bindsym $mod+Print  exec "shutter -w"
+bindsym Print        exec "shutter -s"
+bindsym $mod+Print   exec "shutter -w"
 
 ###########################################
 #            WINDOW MODIFIERS             #
@@ -88,8 +89,8 @@ bindsym $mod+Print  exec "shutter -w"
 bindsym $mod+x            kill
 
 # focus
-bindsym $mod+Alt+Left     focus left
-bindsym $mod+Alt+Right    focus right
+#bindsym $mod+Alt+Left     focus left
+#bindsym $mod+Alt+Right    focus right
 
 # move
 bindsym $mod+Shift+Left   move left
@@ -97,7 +98,7 @@ bindsym $mod+Shift+Down   move down
 bindsym $mod+Shift+Up     move up
 bindsym $mod+Shift+Right  move right
 
-bindsym $mod+Up           fullscreen toggle
+bindsym $mod+Up            fullscreen toggle
 
 # resize
 bindsym $mod+r mode "resize"
@@ -113,6 +114,12 @@ mode "resize" {
 ###########################################
 #               WORKSPACES                #
 ###########################################
+# determine screen workspaces
+workspace 1 output DP-1
+workspace 2 output DP-1
+workspace 3 output DP-1
+workspace 4 output eDP-1
+
 bindsym $mod+Left       workspace prev
 bindsym $mod+Right      workspace next
 
@@ -128,3 +135,10 @@ bindsym $mod+Ctrl+Left  move container to workspace prev;workspace prev
 bindsym $mod+e        layout tabbed
 bindsym $mod+w        layout toggle split
 bindsym $mod+Shift+t  floating toggle
+
+# assignments
+assign [instance="chromium-browser"] 1
+assign [instance="atom"] 2
+assign [instance="pantheon-terminal"] 3
+assign [instance="slack"] 4
+assign [instance="spotify"] 4
