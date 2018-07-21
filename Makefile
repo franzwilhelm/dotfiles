@@ -11,7 +11,7 @@ initial_setup:
 	- make eOS
 	- make zsh
 	- make profile
-	- make i3_
+	- make i3wm
 programming_languages:
 	- make ruby
 	- make java
@@ -77,7 +77,7 @@ git:
 profile:
 	- cp profile.template ~/.profile
 	- cp zshrc.template ~/.zshrc
-i3_:
+i3wm:
 	- sudo apt-get install -y scrot
 	- sudo apt-get install -y i3lock
 	- sudo apt-get install -y i3blocks
@@ -86,6 +86,8 @@ i3_:
 	- sudo apt-get install -y arandr
 	- sudo apt-get install -y rofi
 	- sudo apt-get install -y compton
+	- touch ~/.config/gtk-3.0/gtk.css
+	- echo ".window-frame { box-shadow: none; margin: 0; }" > ~/.config/gtk-3.0/gtk.css
 
 # media >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 flash_player:
