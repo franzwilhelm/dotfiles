@@ -1,8 +1,15 @@
 #!/bin/bash
 
 # exit on network failure
-if [ "`iwgetid -r`" == "" ]; then
+curl --output /dev/null --silent --head --fail toggl.com
+if [ "$?" != "0" ]; then
   exit 0
+fi
+SECRETS="$HOME/.secrets"
+if [ -f "$SECRETS" ]; then
+  . $SECRETS
+else
+  exit 1
 fi
 
 DOT="<span color='#f04c5c'><b>⏺</b></span> <span color='#fff'>toggl</span>"
@@ -56,7 +63,7 @@ formatted_time() {
 fetch_current
 
 if [ "$CURRENT" == "null" ];then
-  if [ $BLOCK_BUTTON == 3 ]; then
+  if [ "$BLOCK_BUTTON" == "3" ]; then
     curl -s -u "$TOGGL_API_TOKEN" \
     	-H "Content-Type: application/json" \
     	-d '{"time_entry":{"description":"Started from i3","tags":["i3"],"created_with":"curl"}}' \

@@ -51,6 +51,8 @@ defaults:
 	- git clone https://github.com/powerline/fonts.git
 	- ./fonts/install.sh
 	- rm -rf fonts
+	# jq
+	- sudo apt-get install -y jq
 eOS:
 	- rm -rf ~/Public ~/Templates
 	- sudo add-apt-repository ppa:philip.scott/elementary-tweaks
