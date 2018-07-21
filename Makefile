@@ -68,6 +68,7 @@ zsh:
 	- sudo chsh -s $(which zsh)
 profile:
 	- cp profile.template ~/.profile
+	- cp zshrc.template ~/.zshrc
 i3_:
 	- sudo apt-get install -y scrot
 	- sudo apt-get install -y i3lock
