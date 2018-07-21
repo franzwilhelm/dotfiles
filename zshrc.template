@@ -1,5 +1,6 @@
 #!/bin/bash
 export ZSH=/home/franz/.oh-my-zsh
+export force_color_prompt=yes
 
 ZSH_THEME="spaceship"
 plugins=(
