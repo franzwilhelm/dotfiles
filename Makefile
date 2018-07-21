@@ -1,14 +1,41 @@
-export SLACK_VERSION?=2.7.1
+export SLACK_VERSION?=3.2.1
 export SLACK_DEB=slack-desktop-$(SLACK_VERSION)-amd64.deb
 export FLASH_TAR=flash_player_ppapi_linux.x86_64.tar.gz
-export GO_VERSION?=1.9
+export GO_VERSION?=1.9.1
 export GO_TAR=go$(GO_VERSION).linux-amd64.tar.gz
 export IJ_VERSION?=2017.2.2
 export IJ_TAR=ideaIU-$(IJ_VERSION).tar.gz
 
-profile:
-	- sudo mv profile.template ~/.profile
+initial_setup:
+	- make defaults
+	- make eOS
+	- make zsh
+	- make profile
+	- make i3_
+programming_languages:
+	- make ruby
+	- make java
+	- make node
+	- make golang
+	- make scheme
+editors:
+	- make atom
+	- make intellij
+	- make vim
+browsers:
+	- make chromium
+	- make google_chrome
+	- make firefox
+	- make opera
+media:
+	- sudo apt install -y redshift
+	- sudo apt install -y vlc
+	- sudo apt-get install -y shutter
+	- make flash_player
+	- make spotify
+	- make slack
 
+# initial_setup >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 defaults:
 	- sudo apt-get update
 	# make add-apt-repository possible
@@ -20,13 +47,10 @@ defaults:
 	- sudo apt-get install -y wmctrl
 	# interactive sudo
 	- sudo apt-get install -y gksu
-
-zsh:
-	- sudo apt-get install -y zsh
-	- sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	- echo "source ~/.profile" >> ~/.zshrc
-	- sudo chsh -s $(which zsh)
-
+	# powerline fonts
+	- git clone https://github.com/powerline/fonts.git
+	- ./fonts/install.sh
+	- rm -rf fonts
 eOS:
 	- rm -rf ~/Public ~/Templates
 	- sudo add-apt-repository ppa:philip.scott/elementary-tweaks
@@ -37,7 +61,13 @@ eOS:
 	- sudo chmod 744 /usr/lib/gvfs/gvfsd-smb-browse
 	# DCONF-EDITOR - for editing registry
 	- sudo apt-get install -y dconf-editor
-
+zsh:
+	- sudo apt-get install -y zsh
+	- sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	- echo "source ~/.profile" >> ~/.zshrc
+	- sudo chsh -s $(which zsh)
+profile:
+	- cp profile.template ~/.profile
 i3_:
 	- sudo apt-get install -y scrot
 	- sudo apt-get install -y i3lock
@@ -48,73 +78,71 @@ i3_:
 	- sudo apt-get install -y rofi
 	- sudo apt-get install -y compton
 
+# media >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+flash_player:
+	- sudo curl -O https://fpdownload.adobe.com/pub/flashplayer/pdc/26.0.0.151/$(FLASH_TAR)
+	- sudo tar -C /usr/local -xzf $(FLASH_TAR)
+	- rm $(FLASH_TAR)
+spotify:
+	- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
+	- echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
+	- sudo apt-get update -y
+	- sudo apt-get install -y spotify-client
 slack:
 	- curl -O https://downloads.slack-edge.com/linux_releases/$(SLACK_DEB)
 	- sudo dpkg -i $(SLACK_DEB)
 	- sudo rm $(SLACK_DEB)
 
-media:
-	- sudo apt install -y redshift
-	- sudo apt install -y vlc
-	- sudo apt-get install -y shutter
-	# FLASH PLAYER
-	- sudo curl -O https://fpdownload.adobe.com/pub/flashplayer/pdc/26.0.0.151/$(FLASH_TAR)
-	- sudo tar -C /usr/local -xzf $(FLASH_TAR)
-	- rm $(FLASH_TAR)
-
-ruby:
-	- sudo apt-get install ruby
-
-java:
-	- sudo apt-get install default-jdk
-	- sudo add-apt-repository ppa:webupd8team/java
-	- sudo apt-get update
-	- sudo apt-get install oracle-java9-installer
-
-node:
-	- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
-	- source ~/.zshrc
-	- nvm install node
-	- npm install --global vue-cli
-
+# programming_languages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 golang:
 	- sudo mkdir -p ~/PROGRAMMERING/GO
 	- sudo curl -O https://storage.googleapis.com/golang/$(GO_TAR)
 	- sudo tar -C /usr/local -xzf $(GO_TAR)
 	- sudo rm $(GO_TAR)
-
+node:
+	- curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.8/install.sh | bash
+	- source ~/.zshrc
+	- nvm install node
+	- npm install --global vue-cli
+java:
+	- sudo apt-get install default-jdk
+	- sudo add-apt-repository ppa:webupd8team/java
+	- sudo apt-get update
+	- sudo apt-get install oracle-java9-installer
+ruby:
+	- sudo apt-get install ruby
 scheme:
 	- sudo add-apt-repository ppa:plt/racket
 	- sudo apt-get update
 	- sudo apt-get install racket
 
-gcloud:
-	- curl https://sdk.cloud.google.com | bash
-	- source ~/.zshrc
-	- gcloud init
-
-editors:
-	# ATOM
+# editors >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+vim:
+	- sudo apt-get install -y vim
+atom:
 	- sudo add-apt-repository ppa:webupd8team/atom
 	- sudo apt-get update
 	- sudo apt-get install -y atom
-	# INTELLIJ - requires install by going to /usr/local/your_ij_installation/bin and running ./install.sh
+intellij:
+	# requires install by going to /usr/local/your_ij_installation/bin and running ./install.sh
 	- sudo curl -O https://download-cf.jetbrains.com/idea/$(IJ_TAR)
 	- sudo tar -C /usr/local -xzf $(IJ_TAR)
 	- sudo rm $(IJ_TAR)
-	# VIM
-	- sudo apt-get install -y vim
 
 latex:
 	- sudo apt-get install -y latexmk
 	- sudo apt-get install -y texlive-latex-recommended
 
+# devops >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 databases:
 	# POSTGRES
-	- sudo apt-get install postgresql postgresql-contrib
+	- sudo apt-get install -y postgresql postgresql-contrib
 	# MYSQL
-	- sudo apt-get install mysql-client mysql-server
-
+	- sudo apt-get install -y mysql-client mysql-server
+gcloud:
+	- curl https://sdk.cloud.google.com | bash
+	- source ~/.zshrc
+	- gcloud init
 docker:
 	- sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 	- sudo chmod +x /usr/local/bin/docker-compose
@@ -123,26 +151,17 @@ docker:
 	- sudo apt-get update
 	- sudo apt-get install -y docker-ce
 
-browsers:
-	- sudo apt-get update
-	# CHROMIUM
+# browsers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+chromium:
 	- sudo apt-get install -y chromium-browser
-	# GOOGLE CHROME
+google_chrome:
 	- wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 	- sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
 	- sudo apt-get update
 	- sudo apt-get install -y google-chrome-stable
-	# FIREFOX
+firefox:
 	- sudo apt-get install -y firefox
-	# OPERA
-	- wget -O - http://deb.opera.com/archive.key | sudo apt-key add -
-	- sudo sh -c 'echo "deb http://deb.opera.com/opera-stable/ stable non-free" >> /etc/apt/sources.list.d/opera.list'
-	- sudo apt-get update
-	- sudo apt-get install -y opera
-
-spotify:
-	- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-	- echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-	- sudo apt-get update -y
-	- sudo apt-get install -y spotify-client
-
+opera:
+	- wget http://download4.operacdn.com/ftp/pub/opera/desktop/40.0.2308.62/linux/opera-stable_40.0.2308.62_amd64.deb
+	- sudo apt install apt-transport-https libcurl3
+	- sudo dpkg -i opera-stable*.deb
