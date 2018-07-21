@@ -138,6 +138,7 @@ atom:
 	- sudo add-apt-repository ppa:webupd8team/atom
 	- sudo apt-get update
 	- sudo apt-get install -y atom
+	- apm install sync-settings
 intellij:
 	# requires install by going to /usr/local/your_ij_installation/bin and running ./install.sh
 	- sudo curl -O https://download-cf.jetbrains.com/idea/$(IJ_TAR)
@@ -151,13 +152,14 @@ latex:
 # devops >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 databases:
 	# POSTGRES
-	- sudo apt-get install -y postgresql postgresql-contrib
+	- sudo echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' > /etc/apt/sources.list.d/pgdg.list
+	- sudo apt-get install -y postgresql-9.6 postgresql-contrib
 	# MYSQL
 	- sudo apt-get install -y mysql-client mysql-server
 gcloud:
 	- curl https://sdk.cloud.google.com | bash
-	- source ~/.zshrc
 	- gcloud init
+	- gcloud components install kubectl
 docker:
 	- sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 	- sudo chmod +x /usr/local/bin/docker-compose
