@@ -34,6 +34,10 @@ media:
 	- make flash_player
 	- make spotify
 	- make slack
+devops:
+	- make databases
+	- make gcloud
+	- make docker
 
 # initial_setup >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 defaults:
