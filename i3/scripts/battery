@@ -1,4 +1,8 @@
 #!/bin/bash
+acpi -b | grep -oP '[0-9]*(?=%)'
+if [[ "$?" == "1" ]]; then
+  exit 0
+fi
 PERCENT=`acpi -b | grep -oP '[0-9]*(?=%)'`
 STATUS=`acpi -b | grep -oP '(?<=: )[A-Za-z]*'`
 COLORPRINT="<span color='%s'>%s</span>%s"
