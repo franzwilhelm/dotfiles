@@ -52,6 +52,7 @@ alias snippets="atom ~/.atom/snippets.cson"
 
 # shortcuts
 alias c="clear"
+alias cat="ccat"
 alias p="cd ~/PROGRAMMERING"
 alias sc="cd ~/Documents/scripts"
 alias b="bee run -gendoc=true -downdoc=true"

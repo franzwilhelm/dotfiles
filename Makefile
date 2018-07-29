@@ -58,6 +58,8 @@ defaults:
 	- rm -rf fonts
 	# jq
 	- sudo apt-get install -y jq
+	# ccat
+	- go get -u github.com/jingweno/ccat
 eOS:
 	- rm -rf ~/Public ~/Templates
 	- sudo add-apt-repository ppa:philip.scott/elementary-tweaks
