@@ -141,4 +141,4 @@ assign [instance="chromium-browser"] 1
 assign [instance="atom"] 2
 assign [instance="pantheon-terminal"] 3
 assign [instance="slack"] 4
-assign [instance="spotify"] 4
+for_window [instance="spotify"] move to workspace 4
