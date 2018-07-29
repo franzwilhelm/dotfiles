@@ -1,11 +1,18 @@
 #!/bin/bash
 NETWORK_NAME=`iwgetid -r`
+if [ "$NETWORK_NAME" == "" ]; then
+	NETWORK_NAME="Ethernet"
+fi
+
+
+~/.config/i3/scripts/online > /dev/null
+ONLINE_RETURN_VALUE=$?
 
 DOT="<span color='%s'><b>⏺</b></span> %s"
 
 if [ "$BLOCK_BUTTON" == "3" ]; then
 	nohup gnome-control-center network >/dev/null 2>&1
-elif [ "$NETWORK_NAME" == "" ]; then
+elif [ $ONLINE_RETURN_VALUE == 1 ]; then
 	TEXT=`printf "$DOT" "#f04c5c" "Disconnected"`
 	echo "$TEXT"
 else
