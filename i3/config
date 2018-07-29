@@ -4,6 +4,11 @@
 set $bg-color #21252b
 set $configpath ~/.config/i3
 set $scriptpath $configpath/scripts
+set $ws1 "1: Chrome"
+set $ws2 "2: Atom"
+set $ws3 "3: Terminal"
+set $ws4 "4: Other"
+
 font                pango:Open Sans 10 9
 set $mod            Mod4
 floating_modifier   $mod
@@ -115,19 +120,19 @@ mode "resize" {
 #               WORKSPACES                #
 ###########################################
 # determine screen workspaces
-workspace 1 output DP-1
-workspace 2 output DP-1
-workspace 3 output DP-1
-workspace 4 output eDP-1
+workspace $ws1 output DP-1
+workspace $ws2 output DP-1
+workspace $ws3 output DP-1
+workspace $ws4 output eDP-1
 
 bindsym $mod+Left       workspace prev
 bindsym $mod+Right      workspace next
 
 # move containers
-bindsym $mod+1          move container to workspace 1
-bindsym $mod+2          move container to workspace 2
-bindsym $mod+3          move container to workspace 3
-bindsym $mod+4          move container to workspace 4
+bindsym $mod+1          move container to workspace $ws1
+bindsym $mod+2          move container to workspace $ws2
+bindsym $mod+3          move container to workspace $ws3
+bindsym $mod+4          move container to workspace $ws4
 bindsym $mod+Ctrl+Right move container to workspace next;workspace next
 bindsym $mod+Ctrl+Left  move container to workspace prev;workspace prev
 
@@ -137,8 +142,8 @@ bindsym $mod+w        layout toggle split
 bindsym $mod+Shift+t  floating toggle
 
 # assignments
-assign [instance="chromium-browser"] 1
-assign [instance="atom"] 2
-assign [instance="pantheon-terminal"] 3
-assign [instance="slack"] 4
-for_window [instance="spotify"] move to workspace 4
+assign [instance="chromium-browser"] $ws1
+assign [instance="atom"] $ws2
+assign [instance="pantheon-terminal"] $ws3
+assign [instance="slack"] $ws4
+for_window [instance="spotify"] move to workspace $ws4
