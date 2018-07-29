@@ -38,6 +38,7 @@ devops:
 	- make databases
 	- make gcloud
 	- make docker
+	- make drone
 
 # initial_setup >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 defaults:
@@ -144,7 +145,6 @@ intellij:
 	- sudo curl -O https://download-cf.jetbrains.com/idea/$(IJ_TAR)
 	- sudo tar -C /usr/local -xzf $(IJ_TAR)
 	- sudo rm $(IJ_TAR)
-
 latex:
 	- sudo apt-get install -y latexmk
 	- sudo apt-get install -y texlive-latex-recommended
@@ -167,6 +167,9 @@ docker:
 	- sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 	- sudo apt-get update
 	- sudo apt-get install -y docker-ce
+drone:
+	- curl -L https://github.com/drone/drone-cli/releases/download/v0.8.5/drone_linux_amd64.tar.gz | tar zx
+	- sudo install -t /usr/local/bin drone
 
 # browsers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 chromium:
