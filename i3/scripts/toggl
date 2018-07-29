@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # exit on network failure
-curl --output /dev/null --silent --head --fail toggl.com
-if [ "$?" != "0" ]; then
+~/.config/i3/scripts/online > /dev/null
+if [ $? == 1 ]; then
   exit 0
 fi
+
 SECRETS="$HOME/.secrets"
 if [ -f "$SECRETS" ]; then
   . $SECRETS

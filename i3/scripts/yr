@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # exit on network failure
-if [ "`iwgetid -r`" == "" ]; then
+~/.config/i3/scripts/online > /dev/null
+if [ $? == 1 ]; then
   exit 0
 fi
 

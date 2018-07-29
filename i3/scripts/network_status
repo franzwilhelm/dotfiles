@@ -4,7 +4,6 @@ if [ "$NETWORK_NAME" == "" ]; then
 	NETWORK_NAME="Ethernet"
 fi
 
-
 ~/.config/i3/scripts/online > /dev/null
 ONLINE_RETURN_VALUE=$?
 
