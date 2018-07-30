@@ -8,11 +8,11 @@ if [ $SPOTIFY_PID ]; then
 
   # If SONGNAME is "Spotify" it's not playing
   if [ "$STATUS" == "Playing" ]; then
-    printf "$ICON" "#abb2bf" "◼"
+    printf "$ICON" "#abb2bf" "<span font_desc=\"Font Awesome 5 Free Solid\">pause</span>"
   elif [ "$STATUS" == "Paused" ]; then
-    printf "$ICON" "#41873f" "▶"
+    printf "$ICON" "#41873f" "<span font_desc=\"Font Awesome 5 Free Solid\">play</span>"
   else
-    echo "loading"
+    echo "<span font_desc=\"Font Awesome 5 Free Solid\">spinner</span>"
   fi
 
   # Click event

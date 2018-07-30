@@ -1,4 +1,4 @@
 #!/bin/bash
 VOL=`awk -F"[][]" '/Right/ { print $2 }' <(amixer -D pulse sget Master) | tail -1`
-ICON="<span color='#77ffff'>🔊</span>"
+ICON="<span color='#77ffff' font_desc=\"Font Awesome 5 Free Solid\">volume-up</span>"
 echo "$ICON $VOL"

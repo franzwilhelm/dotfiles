@@ -9,6 +9,6 @@ fi
 # 	add=" Husk å skrive i dagboka! | "
 # fi
 
-DOT="<span color='#fff'><b>⌚</b></span>"
+DOT="<span color='#fff'><span font_desc=\"Font Awesome 5 Free Regular\">clock</span></span>"
 DATE=`date '+%d.%m.%Y - %H:%M'`
 echo "$DOT $DATE"

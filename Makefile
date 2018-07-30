@@ -60,6 +60,13 @@ defaults:
 	- sudo apt-get install -y jq
 	# ccat
 	- go get -u github.com/jingweno/ccat
+font-awesome:
+	- curl https://use.fontawesome.com/releases/v5.2.0/fontawesome-free-5.2.0-desktop.zip -o fa.zip
+	- unzip fa.zip
+	- sudo mkdir -p /usr/share/fonts/opentype/font-awesome
+	- sudo cp fontawesome-free-5.2.0-desktop/otfs/* /usr/share/fonts/opentype/font-awesome
+	- rm -rf fa.zip
+	- rm -rf fontawesome-free-5.2.0-desktop
 eOS:
 	- rm -rf ~/Public ~/Templates
 	- sudo add-apt-repository ppa:philip.scott/elementary-tweaks

@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Spotify"
+echo "<span font_desc=\"Font Awesome 5 Brands Regular\">spotify</span> <span color=\"#fff\">Spotify</span>"
 # Check if spotify is running
 if [ $BLOCK_BUTTON == 1 ]; then
   spotify
