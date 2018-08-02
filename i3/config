@@ -103,8 +103,8 @@ bindsym $mod+Print   exec "shutter -w"
 bindsym $mod+x            kill
 
 # focus
-#bindsym $mod+Alt+Left     focus left
-#bindsym $mod+Alt+Right    focus right
+bindsym $mod+mod1+Left     focus left
+bindsym $mod+mod1+Right    focus right
 
 # move
 bindsym $mod+Shift+Left   move left
@@ -135,8 +135,15 @@ workspace $ws3 output DP-1
 workspace $ws4 output eDP-1
 workspace $ws5 output eDP-1
 
+# select workspace
 bindsym $mod+Left       workspace prev
 bindsym $mod+Right      workspace next
+bindsym $mod+Tab        workspace next
+bindsym $mod+Shift+1    workspace $ws1
+bindsym $mod+Shift+2    workspace $ws2
+bindsym $mod+Shift+3    workspace $ws3
+bindsym $mod+Shift+4    workspace $ws4
+bindsym $mod+Shift+5    workspace $ws5
 
 # move containers
 bindsym $mod+1          move container to workspace $ws1
