@@ -140,6 +140,9 @@ scheme:
 	- sudo add-apt-repository ppa:plt/racket
 	- sudo apt-get update
 	- sudo apt-get install racket
+python:
+	# python3 will be installed with eOS, but need pip3
+	- sudo apt-get install python3-pip
 
 # editors >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 vim:
