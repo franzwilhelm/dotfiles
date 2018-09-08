@@ -5,6 +5,7 @@ export GO_VERSION?=1.10.3
 export GO_TAR=go$(GO_VERSION).linux-amd64.tar.gz
 export IJ_VERSION?=2017.2.2
 export IJ_TAR=ideaIU-$(IJ_VERSION).tar.gz
+export ZSH_CUSTOM=~/.oh-my-zsh/custom
 
 initial_setup:
 	- make defaults
@@ -80,14 +81,13 @@ eOS:
 zsh:
 	- sudo apt-get install -y zsh
 	- sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	- echo "source ~/.profile" >> ~/.zshrc
 	- sudo chsh -s $(which zsh)
-	- git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
-	- ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
-	- cd ${ZSH_CUSTOM1:-$ZSH/custom}/plugins
-	- git clone https://github.com/djui/alias-tips.git
-	- git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-	- git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+	- git clone https://github.com/denysdovhan/spaceship-prompt.git ${ZSH_CUSTOM}/themes/spaceship-prompt
+	- ln -s ${ZSH_CUSTOM}/themes/spaceship-prompt/spaceship.zsh-theme ${ZSH_CUSTOM}/themes/spaceship.zsh-theme
+	- git clone https://github.com/djui/alias-tips.git ${ZSH_CUSTOM}/plugins/zsh-alias-tips
+	- git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM}/plugins/zsh-history-substring-search
+	- git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+	- git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
 git:
 	- sudo apt-get install -y git
 	- git config --global user.email "franz.vonderlippe@gmail.com"
