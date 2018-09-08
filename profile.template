@@ -25,7 +25,7 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
-export DRONE_SERVER="https://build.teston.no"
+export DRONE_SERVER="https://build.teston.io"
 export EDITOR="/usr/bin/atom --wait"
 
 # teston environment variables
@@ -128,6 +128,12 @@ gittern() {
 save_profile() {
   cp ~/.profile "$DOTFILES_DIR/profile.template"
   cp ~/.zshrc "$DOTFILES_DIR/zshrc.template"
+}
+
+teston_deploy() {
+  target=$1
+  build_nr=$2
+  drone deploy teston/teston-$target $build_nr production
 }
 
 update_dotfiles() {
