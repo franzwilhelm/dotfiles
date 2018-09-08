@@ -71,6 +71,23 @@ alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
 alias k8s="kubectl $@"
 alias k8sprod="gcloud container clusters get-credentials teston-prod-cluster; k8s get pods"
 alias k8sdev="gcloud container clusters get-credentials teston-cluster; k8s get pods"
+alias pods="kubectl get pods"
+alias watchpods="watch kubectl get pods"
+podname() {
+  name=$1
+  shift
+  kubectl get pod -lname=$name $@
+}
+podlog() {
+  name=$1
+  shift
+  podhash=`podname $name | tail -1 | xargs | cut -f 1 -d ' '`
+  kubectl logs $podhash -f $@ --container $name
+}
+podyaml() {
+  podname $1 -oyaml
+}
+
 
 # screen
 alias kontoret="bash ~/.screenlayout/kontoret.sh"
