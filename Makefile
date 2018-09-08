@@ -84,6 +84,10 @@ zsh:
 	- sudo chsh -s $(which zsh)
 	- git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt"
 	- ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+	- cd ${ZSH_CUSTOM1:-$ZSH/custom}/plugins
+	- git clone https://github.com/djui/alias-tips.git
+	- git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
+	- git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git:
 	- sudo apt-get install -y git
 	- git config --global user.email "franz.vonderlippe@gmail.com"
