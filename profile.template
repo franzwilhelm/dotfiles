@@ -27,6 +27,7 @@ export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
 export DRONE_SERVER="https://build.teston.io"
 export EDITOR="/usr/bin/atom --wait"
+export NVM_DIR="$HOME/.nvm"
 
 # teston environment variables
 export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
@@ -157,6 +158,10 @@ update_dotfiles() {
   save_profile &&
   git -C "$DOTFILES_DIR" pull origin master &&
   make -C "$DOTFILES_DIR" profile
+}
+
+load_nvm() {
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 }
 
 echo "Profile successfully loaded"
