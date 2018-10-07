@@ -1,7 +1,7 @@
 export SLACK_VERSION?=3.2.1
 export SLACK_DEB=slack-desktop-$(SLACK_VERSION)-amd64.deb
 export FLASH_TAR=flash_player_ppapi_linux.x86_64.tar.gz
-export GO_VERSION?=1.10.3
+export GO_VERSION?=1.11
 export GO_TAR=go$(GO_VERSION).linux-amd64.tar.gz
 export IJ_VERSION?=2017.2.2
 export IJ_TAR=ideaIU-$(IJ_VERSION).tar.gz
