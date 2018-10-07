@@ -26,7 +26,7 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
 export DRONE_SERVER="https://build.teston.io"
-export EDITOR="/usr/bin/atom --wait"
+export EDITOR="aa --wait"
 export NVM_DIR="$HOME/.nvm"
 
 # teston environment variables
@@ -47,18 +47,15 @@ export TESTON_CLI="$TESTON_GO/teston-cli/"
 # Ubuntu make installation of Ubuntu Make binary symlink
 PATH=/home/franz/.local/share/umake/bin:$PATH
 
-# config files
-alias profile="atom --wait ~/.profile; source ~/.profile"
-alias secrets="atom --wait ~/.secrets; source ~/.profile"
-alias i3conf="atom $DOTFILES_DIR/i3"
-alias makeconf="vim $DOTFILES_DIR/Makefile"
-alias snippets="atom ~/.atom/snippets.cson"
 
 # shortcuts
+alias highlight="ack --passthru"
 alias c="clear"
 alias p="cd ~/PROGRAMMERING"
-alias sc="cd ~/Documents/scripts"
 alias b="bee run -gendoc=true -downdoc=true"
+alias a="atom"
+alias aa="atom -a"
+alias sc="cd ~/Documents/scripts"
 alias terminalBackground="gsettings set org.pantheon.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
 alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
@@ -67,6 +64,13 @@ alias get_uio_links="$DOTFILES_DIR/i3/scripts/get_uio_links $@"
 alias raspberry="ssh pi@raspberrypi.local"
 alias uvisst="p;cd projects/uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/franzwilhelm/uvisst-api; go install; uvisst-api&;"
 alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
+
+# config files
+alias profile="aa --wait ~/.profile; source ~/.profile"
+alias secrets="aa --wait ~/.secrets; source ~/.profile"
+alias i3conf="aa $DOTFILES_DIR/i3"
+alias makeconf="vim $DOTFILES_DIR/Makefile"
+alias snippets="aa ~/.atom/snippets.cson"
 
 # k8s
 alias k8s="kubectl $@"
@@ -100,27 +104,24 @@ alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brigh
 
 # stempl
 alias stemplssh="ssh root@139.59.187.76"
-alias spa="p; cd stempl-spa/; atom src; npm run dev;"
-alias s="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; atom ."
+alias sspa="p; npm_start stempl-spa"
+alias sapi="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; aa ."
 
 # teston
 alias teston="go install github.com/teston/teston-cli && teston-cli"
-alias tspa="cd $TESTON_SPA;npm run dev"
-alias tapi="cd $TESTON_API;bee run"
+alias tspa="npm_start $TESTON_SPA"
+alias tchrome="npm_start $TESTON_CHROME"
+alias tapi="cd $TESTON_API; bee run"
 alias tgames="cd $TESTON_API/../teston-games"
-alias tapidev="cd $TESTON_API;bee rs dev teardown franz && bee rs dev setup franz && bee run"
-alias tps="cd $TESTON_API; bee rs pubsub bold-upgrade-182112"
-alias tffmpeg="cd $TESTON_FFMPEG; go get . && teston-ffmpeg -auth ./google-cloud-pubsub-auth.json bold-upgrade-182112"
-alias tnlp="cd $TESTON_NLP; python main.py"
+alias tapidev="cd $TESTON_API; bee rs dev teardown franz && bee rs dev setup franz && bee run"
 alias tdevops="cd $TESTON_DEVOPS"
-alias tchrome="cd $TESTON_CHROME; npm start"
-alias _tcli="cd $TESTON_CLI; atom ."
-alias _tspa="cd $TESTON_SPA; atom ."
-alias _tapi="cd $TESTON_API; atom ."
-alias _tps="cd $TESTON_API_PUBSUB; atom ."
-alias _tffmpeg="cd $TESTON_FFMPEG; atom ."
-alias _tnlp="cd $TESTON_NLP; atom ."
-alias _tchrome="cd $TESTON_CHROME; atom ."
+alias _tcli="cd $TESTON_CLI; aa ."
+alias _tspa="cd $TESTON_SPA; aa ."
+alias _tapi="cd $TESTON_API; aa ."
+alias _tps="cd $TESTON_API_PUBSUB; aa ."
+alias _tffmpeg="cd $TESTON_FFMPEG; aa ."
+alias _tnlp="cd $TESTON_NLP; aa ."
+alias _tchrome="cd $TESTON_CHROME; aa ."
 
 # network & postgres
 alias fixnet="sudo systemctl restart NetworkManager.service"
@@ -160,8 +161,19 @@ update_dotfiles() {
   make -C "$DOTFILES_DIR" profile
 }
 
+npm_start() {
+  cd $1 && load_nvm && npm start
+}
+
 load_nvm() {
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+}
+
+prune_git() {
+  git fetch -p \
+    && git branch --merged >/tmp/merged-branches \
+    && vim /tmp/merged-branches \
+    && xargs git branch -d </tmp/merged-branches
 }
 
 echo "Profile successfully loaded"
