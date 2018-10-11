@@ -1,4 +1,4 @@
-export SLACK_VERSION?=3.2.1
+export SLACK_VERSION?=3.3.1
 export SLACK_DEB=slack-desktop-$(SLACK_VERSION)-amd64.deb
 export FLASH_TAR=flash_player_ppapi_linux.x86_64.tar.gz
 export GO_VERSION?=1.11

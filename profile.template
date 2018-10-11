@@ -31,6 +31,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # teston environment variables
 export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
+export TESTON_API_APP_PATH="$HOME/PROGRAMMERING/projects/teston/teston-api"
 export TESTON_ENV="dev"
 export TESTON_DIR="~/PROGRAMMERING/projects/teston"
 export TESTON_GO="$GOPATH/src/github.com/teston"
@@ -38,8 +39,9 @@ export TESTON_NLP="$TESTON_DIR/teston-nlp/"
 export TESTON_SPA="$TESTON_DIR/teston-spa/"
 export TESTON_DEVOPS="$TESTON_DIR/teston-devops/"
 export TESTON_CHROME="$TESTON_DIR/teston-chrome-extension/"
+export TESTON_WEBVIEW="$TESTON_DIR/teston-webview/"
 export TESTON_FFMPEG="$TESTON_GO/teston-ffmpeg"
-export TESTON_API="$TESTON_GO/teston-api"
+export TESTON_API="$TESTON_API_APP_PATH"
 export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
 export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
 export TESTON_CLI="$TESTON_GO/teston-cli/"
@@ -56,6 +58,7 @@ alias b="bee run -gendoc=true -downdoc=true"
 alias a="atom"
 alias aa="atom -a"
 alias sc="cd ~/Documents/scripts"
+alias gmne="gm --no-edit --no-ff $@"
 alias terminalBackground="gsettings set org.pantheon.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
 alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
@@ -74,6 +77,7 @@ alias snippets="aa ~/.atom/snippets.cson"
 
 # k8s
 alias k8s="kubectl $@"
+alias k="kubectl $@"
 alias k8sprod="gcloud container clusters get-credentials teston-prod-cluster; k8s get pods"
 alias k8sdev="gcloud container clusters get-credentials teston-cluster; k8s get pods"
 alias pods="kubectl get pods"
@@ -92,7 +96,6 @@ podlog() {
 podyaml() {
   podname $1 -oyaml
 }
-
 
 # screen
 alias kontoret="bash ~/.screenlayout/kontoret.sh"
@@ -163,6 +166,25 @@ update_dotfiles() {
 
 npm_start() {
   cd $1 && load_nvm && npm start
+}
+
+test_recruiter() {
+  signal=$1
+  env=$2
+  test_id=$3
+  if [[ "$test_id" == "" || "$env" == "" ]]; then
+    echo "Please specify 1:env and 2:test_id"
+    exit 1
+  fi
+  gcloud pubsub topics publish api-$env --attribute serviceName=backgroundJobs --message "{\"taskName\": \"recruitTesters\", \"signal\": \"$signal\", \"testID\": $test_id}"
+}
+
+schedule_test_recruiter() {
+  test_recruiter schedule $@
+}
+
+unschedule_test_recruiter() {
+  test_recruiter unschedule $@
 }
 
 load_nvm() {

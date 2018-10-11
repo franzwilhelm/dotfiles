@@ -156,6 +156,7 @@ bindsym $mod+Ctrl+Left  move container to workspace prev;workspace prev
 
 # change container layout
 bindsym $mod+e        layout tabbed
+bindsym $mod+Shift+e  layout windowed
 bindsym $mod+w        layout toggle split
 bindsym $mod+Shift+t  floating toggle
 
