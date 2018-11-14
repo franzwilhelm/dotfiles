@@ -69,7 +69,6 @@ alias uvisst="p;cd projects/uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github
 alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
 
 # config files
-alias profile="aa --wait ~/.profile; source ~/.profile"
 alias secrets="aa --wait ~/.secrets; source ~/.profile"
 alias i3conf="aa $DOTFILES_DIR/i3"
 alias makeconf="vim $DOTFILES_DIR/Makefile"
@@ -147,10 +146,7 @@ gittern() {
 	chromium-browser $uri
 }
 
-save_profile() {
-  cp ~/.profile "$DOTFILES_DIR/profile.template"
-  cp ~/.zshrc "$DOTFILES_DIR/zshrc.template"
-}
+
 
 teston_deploy() {
   target=$1
@@ -158,10 +154,15 @@ teston_deploy() {
   drone deploy teston/teston-$target $build_nr production
 }
 
-update_dotfiles() {
-  save_profile &&
-  git -C "$DOTFILES_DIR" pull origin master &&
-  make -C "$DOTFILES_DIR" profile
+profile() {
+  cd $DOTFILES_DIR
+  git pull origin master &&
+  aa --wait profile.template &&
+  git add "profile.template" &&
+  git commit --edit &&
+  git push &&
+  make profile
+  cd -
 }
 
 npm_start() {
