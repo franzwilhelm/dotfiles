@@ -105,6 +105,8 @@ bindsym $mod+x            kill
 # focus
 bindsym $mod+mod1+Left     focus left
 bindsym $mod+mod1+Right    focus right
+bindsym $mod+mod1+Up       focus up
+bindsym $mod+mod1+Down     focus down
 
 # move
 bindsym $mod+Shift+Left   move left
