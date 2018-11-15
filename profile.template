@@ -146,8 +146,6 @@ gittern() {
 	chromium-browser $uri
 }
 
-
-
 teston_deploy() {
   target=$1
   build_nr=$2
@@ -198,6 +196,10 @@ prune_git() {
     && vim /tmp/merged-branches \
     && xargs git branch -d </tmp/merged-branches
 }
-terminalBackground "rgba(37, 46, 50, 0.95)"
+
+if [ -n "$ZSH_VERSION" ]; then
+  terminalBackground "rgba(37, 46, 50, 0.95)"
+fi
+
 echo "Profile successfully loaded"
 echo "UNIX time: $(date +%s)"
