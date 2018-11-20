@@ -25,6 +25,8 @@ export PATH="$HOME/.local/share/umake/bin:$PATH"
 export PATH="$HOME/.screenlayout:$PATH"
 
 export DOTFILES_DIR=~/.config
+export PROJECTS="$HOME/PROGRAMMERING/projects"
+
 export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
 alias gcc=gcc-6
 export GOROOT=/usr/local/go
@@ -51,7 +53,7 @@ export TESTON_CLI="$TESTON_GO/teston-cli/"
 # shortcuts
 alias highlight="ack --passthru"
 alias c="clear"
-alias p="cd ~/PROGRAMMERING"
+alias p="cd $PROJECTS"
 alias b="bee run -gendoc=true -downdoc=true"
 alias a="atom"
 alias aa="atom -a"
