@@ -16,15 +16,19 @@ if [ -f "$SECRETS" ]; then
 fi
 
 # generic environment variables
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
+# Ubuntu make installation of Ubuntu Make binary symlink
+export PATH="$HOME/.local/share/umake/bin:$PATH"
+export PATH="$HOME/.screenlayout:$PATH"
+
 export DOTFILES_DIR=~/.config
 export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
 alias gcc=gcc-6
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/PROGRAMMERING/GO
-export PATH="/usr/local/go/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
 export DRONE_SERVER="https://build.teston.io"
 export EDITOR="/usr/bin/atom --wait"
 export NVM_DIR="$HOME/.nvm"
@@ -43,10 +47,6 @@ export TESTON_API="$TESTON_GO/teston-api"
 export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
 export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
 export TESTON_CLI="$TESTON_GO/teston-cli/"
-
-# Ubuntu make installation of Ubuntu Make binary symlink
-PATH=/home/franz/.local/share/umake/bin:$PATH
-
 
 # shortcuts
 alias highlight="ack --passthru"
@@ -97,10 +97,6 @@ podyaml() {
 }
 
 # screen
-alias kontoret="bash ~/.screenlayout/kontoret.sh"
-alias kontoret2="bash ~/.screenlayout/kontoret2.sh"
-alias universitetet="bash ~/.screenlayout/universitetet.sh"
-alias laptoponly="bash ~/.screenlayout/laptoponly.sh"
 alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
 alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness; sudo chown franz /sys/class/leds/asus::kbd_backlight/brightness"
 
