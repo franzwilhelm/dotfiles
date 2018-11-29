@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Allowed commands are Next, Previous, PlayPause
+dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.$1 > /dev/null

@@ -6,5 +6,6 @@ if [ $SPOTIFY_PID ]; then
 fi
 
 if [ $BLOCK_BUTTON == 1 ]; then
-  dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+  DIRNAME=`dirname $0`
+  $DIRNAME/spotify_exec Next
 fi
