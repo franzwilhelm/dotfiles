@@ -1,25 +1,69 @@
 #!/bin/bash
 
-# exit on network failure
-~/.config/i3/scripts/online > /dev/null
-if [ $? == 1 ]; then
-  exit 0
-fi
-
 SECRETS="$HOME/.secrets"
-if [ -f "$SECRETS" ]; then
-  . $SECRETS
-else
-  exit 1
-fi
-
 DOT="<span color='#f04c5c'><b>⏺</b></span> <span color='#fff'>toggl</span>"
+BASE_URL="https://www.toggl.com/api/v8/time_entries"
+START_NEW="$BASE_URL/start"
+GET_CURRENT="$BASE_URL/current"
 
-START_NEW="https://www.toggl.com/api/v8/time_entries/start"
-GET_CURRENT="https://www.toggl.com/api/v8/time_entries/current"
+setup() {
+  # exit on network failure
+  ~/.config/i3/scripts/online > /dev/null
+  if [ $? == 1 ]; then
+    exit 0
+  fi
+
+  if [ -f "$SECRETS" ]; then
+    . $SECRETS
+  else
+    exit 1
+  fi
+}
+
+main () {
+  fetch_current
+  if [ "$CURRENT" == "null" ];then
+    if [ "$BLOCK_BUTTON" == "1" ]; then
+      start_new "Started from i3" 0
+      echo "$DOT - <b><i>Started new time entry</i></b>"
+    elif [ "$BLOCK_BUTTON" == "4" ] || [ "$BLOCK_BUTTON" == "5" ]; then
+      fetch_latest
+      desc=`echo $LATEST | jq -r '.description'`
+      pid=`echo $LATEST | jq -r '.pid'`
+      start_new $desc $pid
+      echo "$DOT - <b><i>Resumed '$desc'</i></b>"
+    else
+      echo "$DOT"
+    fi
+  else
+    if [ "$BLOCK_BUTTON" == "3" ]; then
+      id=`echo $CURRENT | jq -r '.id'`
+      stop_time_entry "$id"
+      echo "$DOT - <b><i>Stopped the running time entry</i></b>"
+    fi
+    print_current
+  fi
+}
+
+start_new() {
+  curl -s -u "$TOGGL_API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{"time_entry":{"description":"'"$1"'","pid":'$2',"tags":["i3"],"created_with":"curl"}}' \
+    -X POST "$START_NEW" > /dev/null
+}
 
 fetch_current() {
   CURRENT=`curl -s -u "$TOGGL_API_TOKEN" "$GET_CURRENT" | jq -r '.data'`
+}
+
+fetch_latest() {
+  LATEST=`curl -s -u "$TOGGL_API_TOKEN" "$BASE_URL" | jq -r '.[-1]'`
+}
+
+stop_time_entry() {
+  curl -s -u "$TOGGL_API_TOKEN" \
+    -H "Content-Type: application/json" \
+    -X GET "$BASE_URL/$1/stop" > /dev/null
 }
 
 print_current() {
@@ -61,18 +105,10 @@ formatted_time() {
   echo "<b>$h:$m:$s</b>"
 }
 
-fetch_current
+end_date=`date -I`
+start_date=`date -d "$end_date -1 days" -I`
 
-if [ "$CURRENT" == "null" ];then
-  if [ "$BLOCK_BUTTON" == "3" ]; then
-    curl -s -u "$TOGGL_API_TOKEN" \
-    	-H "Content-Type: application/json" \
-    	-d '{"time_entry":{"description":"Started from i3","tags":["i3"],"created_with":"curl"}}' \
-    	-X POST "$START_NEW" > /dev/null
-    echo "$DOT - <b><i>Started new time entry</i></b>"
-  else
-    echo "$DOT"
-  fi
-else
-  print_current
-fi
+setup
+main
+fetch_latest
+echo "$LATEST"
