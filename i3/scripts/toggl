@@ -111,4 +111,3 @@ start_date=`date -d "$end_date -1 days" -I`
 setup
 main
 fetch_latest
-echo "$LATEST"
