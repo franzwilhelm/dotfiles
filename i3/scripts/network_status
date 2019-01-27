@@ -1,6 +1,6 @@
 #!/bin/bash
 NETWORK_NAME=`iwgetid -r`
-if [ "$NETWORK_NAME" == "" ]; then
+if [[ "$NETWORK_NAME" == "" ]]; then
 	NETWORK_NAME="Ethernet"
 fi
 
