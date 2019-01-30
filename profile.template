@@ -32,7 +32,7 @@ alias gcc=gcc-6
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/PROGRAMMERING/GO
 export DRONE_SERVER="https://build.teston.io"
-export EDITOR="/usr/bin/atom --wait"
+export EDITOR="/usr/bin/code --wait"
 export NVM_DIR="$HOME/.nvm"
 
 # teston environment variables
@@ -71,8 +71,8 @@ alias uvisst="p;cd projects/uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github
 alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
 
 # config files
-alias secrets="aa --wait ~/.secrets; source ~/.profile"
-alias i3conf="aa $DOTFILES_DIR/i3"
+alias secrets="code --wait ~/.secrets; source ~/.profile"
+alias i3conf="code $DOTFILES_DIR/i3"
 alias makeconf="vim $DOTFILES_DIR/Makefile"
 alias snippets="aa ~/.atom/snippets.cson"
 
@@ -105,7 +105,7 @@ alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brigh
 # stempl
 alias stemplssh="ssh root@139.59.187.76"
 alias sspa="p; npm_start stempl-spa"
-alias sapi="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; aa ."
+alias sapi="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; code ."
 
 # teston
 alias teston="go install github.com/teston/teston-cli && teston-cli"
@@ -120,13 +120,13 @@ alias tspar="npm_start $TESTON_SPA"
 alias tapir="cd $TESTON_API; bee run"
 alias tapidev="cd $TESTON_API; bee rs dev teardown franz && bee rs dev setup franz && bee run"
 
-alias _tcli="cd $TESTON_CLI; aa ."
-alias _tspa="cd $TESTON_SPA; aa ."
-alias _tapi="cd $TESTON_API; aa ."
-alias _tps="cd $TESTON_API_PUBSUB; aa ."
-alias _tffmpeg="cd $TESTON_FFMPEG; aa ."
-alias _tnlp="cd $TESTON_NLP; aa ."
-alias _tchrome="cd $TESTON_CHROME; aa ."
+alias _tcli="cd $TESTON_CLI; code ."
+alias _tspa="cd $TESTON_SPA; code ."
+alias _tapi="cd $TESTON_API; code ."
+alias _tps="cd $TESTON_API_PUBSUB; code ."
+alias _tffmpeg="cd $TESTON_FFMPEG; code ."
+alias _tnlp="cd $TESTON_NLP; code ."
+alias _tchrome="cd $TESTON_CHROME; code ."
 
 # network & postgres
 alias fixnet="sudo systemctl restart NetworkManager.service"
@@ -158,7 +158,7 @@ teston_deploy() {
 profile() {
   cd $DOTFILES_DIR
   git pull origin master &&
-  aa --wait profile.template &&
+  code --wait profile.template &&
   git add "profile.template" &&
   git commit --edit &&
   git push &&
