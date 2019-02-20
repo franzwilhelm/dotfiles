@@ -10,7 +10,7 @@ set $font3 Font Awesome 5 Brands Regular
 
 # workspaces
 set $ws1 "1: &#xf268; Chrome"
-set $ws2 "2: &#xf5d2; Atom"
+set $ws2 "2: &#xf121; Code"
 set $ws3 "3: &#xf120; Shell"
 set $ws4 "4: &#xf198; Slack"
 set $ws5 "5: &#xf1bc; Spotify"
@@ -171,6 +171,7 @@ bindsym $mod+Shift+t  floating toggle
 assign [instance="chromium-browser"] $ws1
 assign [instance="google-chrome"] $ws1
 assign [instance="atom"] $ws2
+assign [instance="code"] $ws2
 assign [instance="pantheon-terminal"] $ws3
 assign [instance="slack"] $ws4
 for_window [instance="spotify"] move to workspace $ws5
