@@ -1,26 +1,25 @@
 #!/bin/bash
-out=""
-api=`netstat -tulpn | awk '/-api/' | awk '{print $7}'`
-node=`netstat -tulpn | awk '/node/' | awk '{print $7}'`
-if [ "$api" != "" ]; then
-	port=`netstat -tulpn | awk '/-api/' | awk '{print $4}'`
-	url="http://localhost:${port:3}"
-	out+="<span color='#f04c5c'>bee</span> ⇄ <span color='#4cbdff'>${port:3}</span>"
-	if [ "$node" != "" ]; then
-		out+=" | "
+print_stats() {
+	port=`netstat -tulpn | grep $1 | grep -oP ':\d+'`
+	if [ $port != "" ]; then
+		echo """
+			<span color='$2'>┃</span> 
+			<span color='$2'>$3</span> ⇄ 
+			<b><span color='$2'>${port:1}</span></b> 
+			<span color='$2'>┃</span>
+		"""
 	fi
-fi
+}
 
-if [ "$node" != "" ]; then
-	port=`netstat -tulpn | awk '/node/' | awk '{print $4}'`
-	url="http://localhost:${port:3}"
-	out+="n<span  color='#41873f'>⬢</span>de ⇄ <span color='#4cbdff'>${port:3}</span>"
-fi
+get_output() {
+	api=`print_stats "api" "#4286f4" "&#xf233;"`
+	node=`print_stats "node" "#ffa72d" "&#xf3d3;"`
+	if [ "$api" != "" ]; then
+		echo "$api"
+	fi
+	if [ "$node" != "" ]; then
+		echo "$node"
+	fi
+}
 
-if [ $BLOCK_BUTTON == 1 ]; then
-	xdg-open $url
-fi
-
-if [ "$out" != "" ]; then
-	echo "<span color='white'>${api:6:-4} ($out)</span>"
-fi
+echo `get_output`
