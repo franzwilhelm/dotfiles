@@ -24,7 +24,8 @@ export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
 export PATH="$HOME/.local/share/umake/bin:$PATH"
 export PATH="$HOME/.screenlayout:$PATH"
 
-export DOTFILES_DIR=~/.config
+export DOTFILES_DIR="~/.config"
+export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
 export PROJECTS="$HOME/PROGRAMMERING/projects"
 
 export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
@@ -60,14 +61,14 @@ alias a="atom"
 alias aa="atom -a"
 alias py="python"
 alias py3="python3"
-alias sc="cd ~/Documents/scripts"
+alias sc="cd $SCRIPTS_DIR"
 alias gmne="gm --no-edit --no-ff $@"
 alias gpt="git push && git push --tags"
 alias terminalBackground="gsettings set org.pantheon.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
 alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
 alias ifi="ssh fwlippe@login.ifi.uio.no"
-alias get_uio_links="$DOTFILES_DIR/i3/scripts/get_uio_links $@"
+alias get_uio_links="$SCRIPTS_DIR/get_uio_links $@"
 alias raspberry="ssh pi@raspberrypi.local"
 alias uvisst="p;cd projects/uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/franzwilhelm/uvisst-api; go install; uvisst-api&;"
 alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
