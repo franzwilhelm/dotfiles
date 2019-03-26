@@ -1,0 +1,11 @@
+#!/bin/bash
+# STATUS=`grep "" /sys/class/net/*/carrier | grep -P '(enp\ds0|wlp\ds0|eth\d)' | cut -d ":" -f2`
+wget -q --spider http://google.com
+
+if [ $? -eq 0 ]; then
+	echo "Yes"
+	exit 0
+else
+	echo "No"
+	exit 1
+fi

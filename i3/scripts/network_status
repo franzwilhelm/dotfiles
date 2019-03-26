@@ -1,24 +1,24 @@
 #!/bin/bash
-NETWORK_NAME=`iwgetid -r`
-if [[ "$NETWORK_NAME" == "" ]]; then
-	NETWORK_NAME="Ethernet"
-fi
-
-~/.config/i3/scripts/online > /dev/null
-ONLINE_RETURN_VALUE=$?
-
 DOT="<span color='%s'><b>⏺</b></span> %s"
+OUT=`printf "$DOT" "#f04c5c" "Disconnected"`
 
+# Check online status
+~/.config/i3/scripts/online > /dev/null
+if [ $? -eq 0 ]; then
+	OUT=`printf "$DOT" "#73c990" "Connected"`
+
+	# If the connected button is clicked, show the network name
+	if [ "$BLOCK_BUTTON" == "1" ]; then
+		NETWORK_NAME=`iwgetid -r`
+		if [ "$NETWORK_NAME" == "" ]; then 
+			NETWORK_NAME="Ethernet"
+		fi
+		OUT="$OUT: <span color='#fff'><i>$NETWORK_NAME</i></span>"
+	fi
+fi
+echo "$OUT"
+
+# Open network settings on right click
 if [ "$BLOCK_BUTTON" == "3" ]; then
 	nohup gnome-control-center network >/dev/null 2>&1
-elif [ $ONLINE_RETURN_VALUE == 1 ]; then
-	TEXT=`printf "$DOT" "#f04c5c" "Disconnected"`
-	echo "$TEXT"
-else
-	TEXT=`printf "$DOT" "#73c990" "Connected"`
-	if [ "$BLOCK_BUTTON" == "1" ]; then
-		echo "$TEXT: <span color='#fff'><i>$NETWORK_NAME</i></span>"
-	else
-		echo "$TEXT"
-	fi
 fi
