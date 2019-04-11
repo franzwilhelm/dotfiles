@@ -70,7 +70,7 @@ alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
 alias ifi="ssh fwlippe@login.ifi.uio.no"
 alias get_uio_links="$SCRIPTS_DIR/get_uio_links $@"
 alias raspberry="ssh pi@raspberrypi.local"
-alias uvisst="p;cd projects/uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/franzwilhelm/uvisst-api; go install; uvisst-api&;"
+alias uvisst="p;cd uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/franzwilhelm/uvisst-api; go install; uvisst-api&;"
 alias plantuml="java -jar ~/PROGRAMMERING/plantuml/plantuml.jar $@";
 
 # config files
