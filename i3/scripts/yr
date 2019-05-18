@@ -13,9 +13,16 @@ get_param() {
   echo "$DATA" | grep -oP "$1" | head -1
 }
 TEMP=`get_param '(?<=<temperature unit="celsius" value=")(-)?[0-9]*'`
-WEATHER=`get_param '(?<=<symbol number="4" name=")[A-Za-zæøå]*'`
+WEATHER_REALTIME=`get_param '(?<=<symbol number="4" name=")[A-Za-zæøå]*'`
+WEATHER_CLOSEST_PRED=`get_param '(?<=<symbol number="4" numberEx="4" name=")[A-Za-zæøå]*'`
 WIND_SPEED=`get_param '(?<=<windSpeed mps=")[0-9]*.[0-9]*'`
 WIND_NAME=`get_param '(?<=<windSpeed mps=")([0-9]*.[0-9]*" name=")[A-Za-zæøå ]*' | grep -oP '(?<=name=").*'`
+
+if [[ "$WEATHER_REALTIME" == "" ]]; then
+  WEATHER=$WEATHER_CLOSEST_PRED
+else
+  WEATHER=$WEATHER_REALTIME
+fi
 
 shopt -s nocasematch
 case $WEATHER in
