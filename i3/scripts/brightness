@@ -2,7 +2,7 @@
 raw=`cat /sys/class/backlight/intel_backlight/brightness`
 
 if [ `pgrep redshift` ]; then
-	icon="<span color='orange'><b>🌙</b></span>"
+	icon="<span color='white'><b>🌙</b></span>"
 	if [ $BLOCK_BUTTON == 1 ]; then
 		pkill redshift
 	fi
@@ -10,7 +10,7 @@ else
 	if [ $BLOCK_BUTTON == 1 ]; then
 		redshift&
 	fi
-	icon="<span color='#f4ff66'><b>☀</b></span>"
+	icon="<span color='white'><b>☀</b></span>"
 fi
 brightness=$((raw / 10 + 10))
 echo "$icon $brightness%"

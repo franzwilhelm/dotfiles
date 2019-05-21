@@ -1,18 +1,19 @@
 #!/bin/bash
-DOT="<span color='%s'><b>⏺</b></span> %s"
-OUT=`printf "$DOT" "#f04c5c" "Disconnected"`
+TEMPLATE="<span color='%s'><b>%s</b></span>%s"
+OUT=`printf "$TEMPLATE" "#f04c5c" "⏺" ""`
 
 # Check online status
 ~/.config/i3/scripts/online > /dev/null
 if [ $? -eq 0 ]; then
-	OUT=`printf "$DOT" "#73c990" "Connected"`
+	OUT=`printf "$TEMPLATE" "white" "&#xf1eb;" ""`
 
+	NETWORK_NAME=`iwgetid -r`
+	if [ "$NETWORK_NAME" == "" ]; then 
+		OUT=`printf "$TEMPLATE" "white" "&#xf233;" ""`
+		NETWORK_NAME="Ethernet"
+	fi
 	# If the connected button is clicked, show the network name
 	if [ "$BLOCK_BUTTON" == "1" ]; then
-		NETWORK_NAME=`iwgetid -r`
-		if [ "$NETWORK_NAME" == "" ]; then 
-			NETWORK_NAME="Ethernet"
-		fi
 		OUT="$OUT: <span color='#fff'><i>$NETWORK_NAME</i></span>"
 	fi
 fi

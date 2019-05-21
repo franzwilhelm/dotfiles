@@ -1,4 +1,18 @@
 #!/bin/bash
 VOL=`awk -F"[][]" '/Right/ { print $2 }' <(amixer -D pulse sget Master) | tail -1`
-ICON="<span color='#77ffff' font_desc=\"Font Awesome 5 Free Solid\">volume-up</span>"
-echo "$ICON $VOL"
+VOL=${VOL::-1}
+
+COLOR="white"
+if (( $VOL >= 70 )); then
+    ICON_NAME="volume-up"
+elif (( $VOL >= 30 )); then
+    ICON_NAME="volume-down"
+elif (( $VOL >= 10 )); then
+    ICON_NAME="volume-off"
+else
+    ICON_NAME="volume-off"
+    COLOR="#f04c5c"
+fi
+
+ICON="<span color='$COLOR' font_desc=\"Font Awesome 5 Free Solid\">$ICON_NAME</span>"
+echo "$ICON $VOL%"
