@@ -1,0 +1,12 @@
+#!/bin/bash
+
+while [ true ]; do
+    DP1_RES=`xrandr | grep -A1 'DP-1' | tail -1 | grep -oP '\d+x\d+'`
+
+    if [[ "$DP1_RES" != "" ]]; then
+        xrandr --output HDMI-1 --off --output DP-1 --mode $DP1_RES --pos 0x0 --rotate normal --output eDP-1 --primary --mode 1920x1080 --pos 2560x312 --rotate normal --output HDMI-2 --off
+    else
+        xrandr --output HDMI-1 --off --output DP-1 --off --output eDP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output HDMI-2 --off
+    fi
+    sleep 1
+done
