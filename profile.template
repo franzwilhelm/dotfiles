@@ -34,7 +34,6 @@ export GOROOT=/usr/local/go
 export GOPATH=$HOME/PROGRAMMERING/GO
 export DRONE_SERVER="https://build.teston.io"
 export EDITOR="/usr/bin/code --wait"
-export NVM_DIR="$HOME/.nvm"
 
 # teston environment variables
 export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
@@ -175,10 +174,6 @@ profile() {
   cd -
 }
 
-npm_start() {
-  cd $1 && load_nvm && npm start
-}
-
 test_recruiter() {
   signal=$1
   env=$2
@@ -196,10 +191,6 @@ schedule_test_recruiter() {
 
 unschedule_test_recruiter() {
   test_recruiter unschedule $@
-}
-
-load_nvm() {
-  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 }
 
 prune_git() {
