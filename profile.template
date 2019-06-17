@@ -107,11 +107,6 @@ podyaml() {
 alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
 alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness; sudo chown franz /sys/class/leds/asus::kbd_backlight/brightness"
 
-# stempl
-alias stemplssh="ssh root@139.59.187.76"
-alias sspa="p; npm_start stempl-spa"
-alias sapi="cd $GOPATH/src/github.com/franzwilhelm/stempl-api; code ."
-
 # teston
 alias teston="go install github.com/teston/teston-cli && teston-cli"
 alias tspa="cd $TESTON_SPA"
@@ -123,8 +118,9 @@ alias tchrome="cd $TESTON_CHROME"
 alias tdevops="cd $TESTON_DEVOPS"
 alias tgames="cd $TESTON_API/../teston-games"
 
-alias tchromer="npm_start $TESTON_CHROME"
-alias tspar="npm_start $TESTON_SPA"
+alias tchromer="cd $TESTON_CHROME; npm run dev"
+alias tspar="cd $TESTON_SPA; npm run dev"
+alias twebr="cd $TESTON_WEBVIEW; npm run dev"
 alias tapir="cd $TESTON_API; bee run"
 alias tapidev="cd $TESTON_API; bee rs dev teardown franz && bee rs dev setup franz && bee run"
 
