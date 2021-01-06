@@ -1,5 +1,6 @@
 #!/bin/bash
 export ZSH=/home/franz/.oh-my-zsh
+export ZSH_CUSTOM=$ZSH/custom
 export force_color_prompt=yes
 
 ZSH_THEME="spaceship"
@@ -13,8 +14,8 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 source $HOME/.profile
-source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-source $ZSH_CUSTOM/plugins/zsh-history-substring-search
+source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH_CUSTOM/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 
@@ -26,4 +27,7 @@ fi
 if [ -f '/home/franz/google-cloud-sdk/completion.zsh.inc' ]; then
   source '/home/franz/google-cloud-sdk/completion.zsh.inc';
 fi
-source <(kubectl completion zsh)
+# The next line enables shell command completion for kubectl
+if command -v kubectl &> /dev/null; then
+  source <(kubectl completion zsh)
+fi

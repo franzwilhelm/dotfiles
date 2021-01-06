@@ -18,6 +18,7 @@ fi
 # generic environment variables
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="/snap/bin:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
 # Ubuntu make installation of Ubuntu Make binary symlink
@@ -32,26 +33,7 @@ export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
 alias gcc=gcc-6
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/PROGRAMMERING/GO
-export DRONE_SERVER="https://build.teston.io"
-export EDITOR="/usr/bin/code --wait"
-
-# teston environment variables
-export TESTON_DBCONN="postgres://teston:teston123@localhost/teston?sslmode=disable"
-export TESTON_ENV="dev"
-export TESTON_DIR="$HOME/PROGRAMMERING/projects/teston"
-export TESTON_GO="$GOPATH/src/github.com/teston"
-export TESTON_NLP="$TESTON_DIR/teston-nlp/"
-export TESTON_SPA="$TESTON_DIR/teston-spa/"
-export TESTON_WEBVIEW="$TESTON_DIR/webview/"
-export TESTON_API_JS_CLIENT="$TESTON_DIR/api-js-client/"
-export TESTON_VUE_COMPONENTS="$TESTON_DIR/teston-vue-components/"
-export TESTON_DEVOPS="$TESTON_DIR/teston-devops/"
-export TESTON_CHROME="$TESTON_DIR/teston-chrome-extension/"
-export TESTON_FFMPEG="$TESTON_GO/teston-ffmpeg"
-export TESTON_API="$TESTON_GO/teston-api"
-export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
-export TESTON_API_PUBSUB="$TESTON_GO/teston-api/cmd/pubsub"
-export TESTON_CLI="$TESTON_GO/teston-cli/"
+export EDITOR="/usr/bin/atom --wait"
 
 # shortcuts
 alias highlight="ack --passthru"
@@ -66,7 +48,7 @@ alias py3="python3"
 alias sc="cd $SCRIPTS_DIR"
 alias gmne="gm --no-edit --no-ff $@"
 alias gpt="git push && git push --tags"
-alias terminalBackground="gsettings set org.pantheon.terminal.settings background $@"
+alias terminalBackground="gsettings set io.elementary.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
 alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
 alias ifi="ssh fwlippe@login.ifi.uio.no"
@@ -76,16 +58,14 @@ alias uvisst="p;cd uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/fran
 alias plantuml="java -jar $HOME/PROGRAMMERING/plantuml/plantuml.jar $@";
 
 # config files
-alias secrets="code --wait $HOME/.secrets; source $HOME/.profile"
-alias i3conf="code $DOTFILES_DIR/i3"
+alias secrets="$EDITOR $HOME/.secrets; source $HOME/.profile"
+alias i3conf="atom $DOTFILES_DIR/i3"
 alias makeconf="vim $DOTFILES_DIR/Makefile"
 alias snippets="aa $HOME/.atom/snippets.cson"
 
 # k8s
 alias k8s="kubectl $@"
 alias k="kubectl $@"
-alias k8sprod="gcloud container clusters get-credentials teston-prod-cluster; k8s get pods"
-alias k8sdev="gcloud container clusters get-credentials teston-cluster; k8s get pods"
 alias pods="kubectl get pods"
 alias watchpods="watch kubectl get pods"
 podname() {
@@ -106,31 +86,6 @@ podyaml() {
 # screen
 alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
 alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness; sudo chown franz /sys/class/leds/asus::kbd_backlight/brightness"
-
-# teston
-alias teston="go install github.com/teston/teston-cli && teston-cli"
-alias tspa="cd $TESTON_SPA"
-alias tweb="cd $TESTON_WEBVIEW"
-alias tvue="cd $TESTON_VUE_COMPONENTS"
-alias tapijs="cd $TESTON_API_JS_CLIENT"
-alias tapi="cd $TESTON_API"
-alias tchrome="cd $TESTON_CHROME"
-alias tdevops="cd $TESTON_DEVOPS"
-alias tgames="cd $TESTON_API/../teston-games"
-
-alias tchromer="cd $TESTON_CHROME; npm run dev"
-alias tspar="cd $TESTON_SPA; npm run dev"
-alias twebr="cd $TESTON_WEBVIEW; npm run dev"
-alias tapir="cd $TESTON_API; bee run"
-alias tapidev="cd $TESTON_API; bee rs dev teardown franz && bee rs dev setup franz && bee run"
-
-alias _tcli="cd $TESTON_CLI; code ."
-alias _tspa="cd $TESTON_SPA; code ."
-alias _tapi="cd $TESTON_API; code ."
-alias _tps="cd $TESTON_API_PUBSUB; code ."
-alias _tffmpeg="cd $TESTON_FFMPEG; code ."
-alias _tnlp="cd $TESTON_NLP; code ."
-alias _tchrome="cd $TESTON_CHROME; code ."
 
 # network & postgres
 alias fixnet="sudo systemctl restart NetworkManager.service"
@@ -153,16 +108,10 @@ gittern() {
 	chromium-browser $uri
 }
 
-teston_deploy() {
-  target=$1
-  build_nr=$2
-  drone deploy teston/teston-$target $build_nr production
-}
-
 profile() {
   cd $DOTFILES_DIR
   git pull origin master &&
-  code --wait profile.template &&
+  atom --wait profile.template &&
   git add "profile.template" &&
   git commit --edit &&
   git push &&
