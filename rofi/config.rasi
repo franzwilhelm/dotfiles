@@ -12,7 +12,7 @@ configuration {
   color-normal: "#21252b,#ffffff,#21252b" ;
   color-urgent: "#21252b" ;
   color-active: "#00ff00" ;
-  color-window: "#21252b";*/
+  color-window: "#21252b";
 }
 #window {
   border-radius: 5px;
