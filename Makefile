@@ -117,6 +117,13 @@ i3wm:
 	sudo apt-get install -y compton
 	touch ~/.config/gtk-3.0/gtk.css
 	echo ".window-frame { box-shadow: none; margin: 0; }" > ~/.config/gtk-3.0/gtk.css
+	make dunst-notifications
+dunst-notifications:
+	sudo apt-get install -y libdbus-glib-1-dev libnotify-dev libxinerama-dev libxrandr-dev libxss-dev glibc-source libsdl-pango-dev libgtk-3-dev
+	git clone https://github.com/dunst-project/dunst.git /tmp/dunst
+	cd /tmp/dunst && \
+	make && \
+	sudo make install
 
 # media >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 flash_player:
