@@ -6,79 +6,36 @@ if [ $? == 1 ]; then
   exit 0
 fi
 
-FORECAST_URL='http://www.yr.no/sted/Norge/Oslo/Oslo/Oslo_(Blindern)_målestasjon'
-DATA=`curl -s "$FORECAST_URL/varsel.xml"`
+where_am_i=`whereami -r`
+lon=`echo $where_am_i | grep -oP '(?<=longitude": )[0-9\.-]*'`
+lat=`echo $where_am_i | grep -oP '(?<=latitude": )[0-9\.-]*'`
 
-r_temp='(?<=<temperature unit="celsius" value=")(-)?[0-9]*'
-r_weather='(?<=<symbol number="\d" name=")[A-Za-zæøå ]*'
-r_weather_preds='(?<=<symbol number="\d" numberEx="\d).*(?=var=.*)'
-r_wind_speed='(?<=<windSpeed mps=")[0-9]*.[0-9]*'
-r_wind_name='(?<=<windSpeed mps=")([0-9]*.[0-9]*" name=")[A-Za-zæøå ]*'
-r_from_clock='(?<=from="\d\d\d\d-\d\d-\d\dT)\d\d'
-r_to_clock='(?<=to="\d\d\d\d-\d\d-\d\dT)\d\d'
+result=`curl -s -X GET --header "Accept: application/json" "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=$lat&lon=$lon"`
 
-get_param() {
-  echo "$DATA" | grep -A5 "<observations" | grep -oP "$1"
-}
+symbol=`echo $result | grep -oP '(?<=symbol_code":")\w*' | head -1`
+case $symbol in
+*clearsky*|*fair*)
+  weather_unicode="f185"
+  weather_color="#f4eb42"
+  ;;
+*cloudy*|*fog*)
+  weather_unicode="f0c2"
+  weather_color="gray"
+  ;;
+*rain*)
+  weather_unicode="f043"
+  weather_color="#2b9ee5"
+  ;;
+*thunder*)
+  weather_unicode="f0e7"
+  weather_color="#adba2c"
+  ;;
+*)
+  weather_unicode="f128"
+  weather_color="gray"
+  ;;
+esac
 
-set_weather_dot() {
-  shopt -s nocasematch
-  case $1 in
-  klarvær|lettskyet)
-    weather_unicode="f185"
-    weather_color="#f4eb42"
-    ;;
-  *skyet)
-    weather_unicode="f0c2"
-    weather_color="gray"
-    ;;
-  *regn)
-    weather_unicode="f043"
-    weather_color="#2b9ee5"
-    ;;
-  *torden)
-    weather_unicode="f0e7"
-    weather_color="#adba2c"
-    ;;
-  *)
-    weather_unicode="f128"
-    weather_color="gray"
-    ;;
-  esac
-  dot="<span color='$weather_color'><b>&#x$weather_unicode;</b></span>"
-}
-
-calculate_predictions() {
-  today_preds=`echo "$DATA" | grep -A9 -P '<time.*'$now`
-  from_times=(`echo "$today_preds" | grep -oP "$r_from_clock"`)
-  to_times=(`echo "$today_preds" | grep -oP "$r_to_clock"`)
-  temps=(`echo "$today_preds" | grep -oP "$r_temp"`)
-  IFS=$'\n' # Change IFS to newline
-  weathers=(`echo "$today_preds" | grep -oP "$r_weather_preds" | grep -oP '(?<=name=")[A-Za-zæøå ]*'`)
-
-  predictions=""
-  for i in ${!from_times[*]}; do
-    set_weather_dot ${weathers[$i]}
-    predictions+="<b>${from_times[$i]} - ${to_times[$i]}</b>: $dot ${temps[$i]}°C   "
-  done
-  predictions="${predictions::-3}"
-}
-
-now=`date '+%Y-%m-%d'`
-now_temp=`get_param "$r_temp"`
-now_weather=`get_param "$r_weather"`
-
-wind_speed=`get_param "$r_wind_speed"`
-wind_name=`get_param "$r_wind_name" | grep -oP '(?<=name=").*'`
-
-set_weather_dot "$now_weather"
-if [[ $BLOCK_BUTTON == 1 ]]; then
-  echo "$dot $now_weather: <b>$now_temp°C</b> <i>($wind_name, $wind_speed m/s)</i>"
-elif [[ $BLOCK_BUTTON == 5 ]]; then
-  google-chrome $FORECAST_URL &
-elif [[ $BLOCK_BUTTON == 3 ]]; then
-  calculate_predictions
-  echo "$predictions"
-else
-  echo "$dot $now_temp°C"
-fi
+weather_symbol="<span color='$weather_color'><b>&#x$weather_unicode;</b></span>"
+temperature=`echo $result | grep -oP '(?<=air_temperature":)[0-9\.-]*' | head -1`
+echo "$weather_symbol $temperature °C"

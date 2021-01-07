@@ -23,11 +23,11 @@ setup:
 	make eOS
 	make i3wm
 programming_languages:
-	- make ruby
-	- make java
-	- make node
-	- make golang
-	- make scheme
+	make ruby
+	make java
+	make node
+	make golang
+	make scheme
 editors:
 	make atom
 	make intellij
@@ -91,6 +91,7 @@ defaults:
 	sudo apt-get install -y jq
 	# ccat
 	go get -u github.com/jingweno/ccat
+	sudo npm install -g @rafaelrinaldi/whereami
 font-awesome:
 	curl https://use.fontawesome.com/releases/v5.2.0/fontawesome-free-5.2.0-desktop.zip -o fa.zip
 	unzip fa.zip
