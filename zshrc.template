@@ -11,23 +11,12 @@ plugins=(
   alias-tips
   zsh-syntax-highlighting
   history-substring-search
+  kubectl
+  gcloud
 )
+
 source $ZSH/oh-my-zsh.sh
 source $HOME/.profile
-source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH_CUSTOM/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/franz/google-cloud-sdk/path.zsh.inc' ]; then
-  source '/home/franz/google-cloud-sdk/path.zsh.inc';
-fi
-# The next line enables shell command completion for gcloud.
-if [ -f '/home/franz/google-cloud-sdk/completion.zsh.inc' ]; then
-  source '/home/franz/google-cloud-sdk/completion.zsh.inc';
-fi
-# The next line enables shell command completion for kubectl
-if command -v kubectl &> /dev/null; then
-  source <(kubectl completion zsh)
-fi
