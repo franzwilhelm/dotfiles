@@ -33,6 +33,7 @@ exec_always ~/.config/i3/scripts/screen_watcher &
 exec_always compton --config ~/.config/i3/compton.conf
 exec_always feh --bg-fill ~/Pictures/Background.jpg
 exec_always bash ~/.config/i3/scripts/download_watcher.sh
+exec_always nm-applet
 
 # i3 reload/restart/quit + lock & bar settings
 bindsym $mod+Shift+c reload
@@ -83,7 +84,7 @@ bindsym XF86KbdBrightnessDown   exec echo $(($(cat /sys/class/leds/asus::kbd_bac
 ###########################################
 #              APP SHORTCUTS              #
 ###########################################
-bindsym $mod+space   exec rofi -show run 
+bindsym $mod+space   exec rofi -show run
 bindsym $mod+Return  exec "i3-sensible-terminal"
 bindsym $mod+c       exec "google-chrome"
 bindsym $mod+s       exec "slack"
