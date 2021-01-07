@@ -139,9 +139,10 @@ golang:
 	sudo tar -C /usr/local -xzf $(GO_TAR)
 	sudo rm $(GO_TAR)
 node:
-	curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-	source ~/.zshrc
-	nvm install node
+	sudo apt-get install -y nodejs npm
+	sudo npm i -g npm
+	sudo npm i -g n
+	sudo n stable
 java:
 	sudo apt-get install -y openjdk-11-jdk openjdk-11-jre
 ruby:
