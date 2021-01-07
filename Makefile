@@ -47,6 +47,7 @@ devops:
 optional:
 	make flash_player
 	make spotify
+	make discord
 
 # initial_setup >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 git:
@@ -127,6 +128,9 @@ spotify:
 	echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 	sudo apt-get update -y
 	sudo apt-get install -y spotify-client
+discord:
+	wget 'https://discordapp.com/api/download?platform=linux&format=deb' -o discord.deb
+	sudo dpkg -i discord.deb
 
 # programming_languages >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 golang:
