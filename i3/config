@@ -172,6 +172,6 @@ assign [instance="chromium-browser"] $ws1
 assign [instance="google-chrome"] $ws1
 assign [instance="atom"] $ws2
 assign [instance="code"] $ws2
-assign [instance="pantheon-terminal"] $ws3
+assign [instance="x-terminal-emulator"] $ws3
 assign [instance="slack"] $ws4
 for_window [instance="spotify"] move to workspace $ws5
