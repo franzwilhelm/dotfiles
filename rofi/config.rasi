@@ -1,0 +1,63 @@
+configuration {
+  width: 40;
+  lines: 8;
+  font: "mono 10";
+  terminal: "i3-sensible-terminal";
+  padding: 10;
+  show-icons: true;
+  eh: 2;
+  line-padding: 5;
+  separator-style: "solid";
+  hide-scrollbar: true;
+  color-normal: "#21252b,#ffffff,#21252b" ;
+  color-urgent: "#21252b" ;
+  color-active: "#00ff00" ;
+  color-window: "#21252b";*/
+}
+#window {
+  border-radius: 5px;
+}
+
+* {
+  background-color: #282C33;
+  border-color: #2e343f;
+  text-color: #ffffff;
+  spacing: 0;
+  border-radius: 5px;
+}
+
+inputbar {
+  border: 0 0 1px 0;
+  children: [prompt,entry];
+}
+
+prompt {
+  padding: 16px;
+  border: 0 1px 0 0;
+}
+
+textbox {
+  background-color: #2e343f;
+  border: 0 0 1px 0;
+  border-color: #282C33;
+  padding: 8px 16px;
+}
+
+entry {
+  padding: 16px;
+}
+
+listview {
+  cycle: false;
+  scrollbar: false;
+}
+
+element {
+  padding: 16px;
+  border-radius: 10px;
+  margin: 5px 10px 5px 10px;
+}
+
+element selected {
+  background-color: #2e343f;
+}
