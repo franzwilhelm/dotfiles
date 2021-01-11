@@ -21,9 +21,6 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="/snap/bin:$PATH"
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
-# Ubuntu make installation of Ubuntu Make binary symlink
-export PATH="$HOME/.local/share/umake/bin:$PATH"
-export PATH="$HOME/.screenlayout:$PATH"
 
 export DOTFILES_DIR="$HOME/.config"
 export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
@@ -39,29 +36,37 @@ export EDITOR="/usr/bin/atom --wait"
 alias highlight="ack --passthru"
 alias c="clear"
 alias p="cd $PROJECTS"
-alias uio="cd $HOME/Documents/uio"
-alias b="bee run -gendoc=true -downdoc=true"
 alias a="atom"
 alias aa="atom -a"
 alias py="python"
 alias py3="python3"
 alias sc="cd $SCRIPTS_DIR"
-alias gmne="gm --no-edit --no-ff $@"
-alias gpt="git push && git push --tags"
 alias terminalBackground="gsettings set io.elementary.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
-alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
-alias ifi="ssh fwlippe@login.ifi.uio.no"
-alias get_uio_links="$SCRIPTS_DIR/get_uio_links $@"
-alias raspberry="ssh pi@raspberrypi.local"
-alias uvisst="p;cd uvisst/uvisst-spa; npm start&; cd $GOPATH/src/github.com/franzwilhelm/uvisst-api; go install; uvisst-api&;"
 alias plantuml="java -jar $HOME/PROGRAMMERING/plantuml/plantuml.jar $@";
+
+
+# git shortcuts
+alias gmne="gm --no-edit --no-ff $@"
+alias gpt="git push && git push --tags"
+alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
+
 
 # config files
 alias secrets="$EDITOR $HOME/.secrets; source $HOME/.profile"
 alias i3conf="atom $DOTFILES_DIR/i3"
 alias makeconf="vim $DOTFILES_DIR/Makefile"
 alias snippets="aa $HOME/.atom/snippets.cson"
+profile() {
+  cd $DOTFILES_DIR
+  git pull origin master &&
+  atom --wait profile.template &&
+  git add "profile.template" &&
+  git commit --edit &&
+  git push &&
+  make profile
+  cd -
+}
 
 # k8s
 alias k8s="kubectl $@"
@@ -83,59 +88,13 @@ podyaml() {
   podname $1 -oyaml
 }
 
-# screen
-alias rightScreen="xrandr --output DP-1 --mode 1920x1200 --rotate right --right-of eDP-1 --output eDP-1 --primary --mode 1920x1080"
-alias fixBrightness="sudo chown franz /sys/class/backlight/intel_backlight/brightness; sudo chown franz /sys/class/leds/asus::kbd_backlight/brightness"
-
 # network & postgres
 alias fixnet="sudo systemctl restart NetworkManager.service"
-alias fixpg="sudo systemctl restart postgresql"
 alias pg="sudo -u postgres psql"
 
-docs() {
-  url="$1"
-  case $url in
-    "moment") url="https://momentjs.com/docs/";;
-    "gorm")   url="http://jinzhu.me/gorm/models.html";;
-    "synq")   url="https://docs.synq.fm/api/#!/video/query";;
-    *)        echo "No docs found for '"$url"'";google $url" documentation";return 0;;
-  esac
-  xdg-open $url
-}
-
-gittern() {
+github-open() {
 	uri="https://github.com/"`git remote -v | grep -Pi $1 | grep -oPi '((?<=github.com:)|(?<=github.com/))\w*\/.*(?=\.git \(fetch\))'`
-	chromium-browser $uri
-}
-
-profile() {
-  cd $DOTFILES_DIR
-  git pull origin master &&
-  atom --wait profile.template &&
-  git add "profile.template" &&
-  git commit --edit &&
-  git push &&
-  make profile
-  cd -
-}
-
-test_recruiter() {
-  signal=$1
-  env=$2
-  test_id=$3
-  if [[ "$test_id" == "" || "$env" == "" ]]; then
-    echo "Please specify 1:env and 2:test_id"
-    exit 1
-  fi
-  gcloud pubsub topics publish api-$env --attribute serviceName=backgroundJobs --message "{\"taskName\": \"recruitTesters\", \"signal\": \"$signal\", \"testID\": $test_id}"
-}
-
-schedule_test_recruiter() {
-  test_recruiter schedule $@
-}
-
-unschedule_test_recruiter() {
-  test_recruiter unschedule $@
+	google-chrome $uri
 }
 
 prune_git() {
