@@ -95,6 +95,7 @@ bindsym $mod+d       exec "pantheon-files Downloads"
 
 # screenshots
 bindsym Print        exec "shutter -s"
+bindsym $mod+Shift+s exec "shutter -s"
 bindsym $mod+Print   exec "shutter -w"
 
 # spotify
