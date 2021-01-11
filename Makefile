@@ -200,3 +200,18 @@ opera:
 	wget -qO- https://deb.opera.com/archive.key | sudo apt-key add -
 	sudo add-apt-repository "deb [arch=i386,amd64] https://deb.opera.com/opera-stable/ stable non-free"
 	sudo apt install -y opera-stable
+
+# reMarkable >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+reMarkable-setup:
+	# Adding remarkable as a ssh-alias
+	echo "host remarkable\n	Hostname $(hostname)\n	User root" >> ~/.ssh/config
+	# Authenticating with reMarkable
+	ssh-copy-id remarkable
+	# Success!
+
+reMarkable-templates:
+	scp reMarkable/templates/* remarkable:/usr/share/remarkable/templates/
+
+reMarkable-jagged-lines-fix:
+	git -C /tmp/recept pull || git clone https://github.com/funkey/recept /tmp/recept
+	/tmp/recept/install.sh

@@ -33,6 +33,7 @@ exec_always ~/.config/i3/scripts/screen_watcher &
 exec_always compton --config ~/.config/i3/compton.conf
 exec_always feh --bg-fill ~/Pictures/Background.jpg
 exec_always bash ~/.config/i3/scripts/download_watcher.sh
+exec_always nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
 exec_always nm-applet
 
 # i3 reload/restart/quit + lock & bar settings
