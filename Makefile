@@ -132,10 +132,7 @@ flash_player:
 	sudo tar -C /usr/local -xzf $(FLASH_TAR)
 	rm $(FLASH_TAR)
 spotify:
-	sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0DF731E45CE24F27EEEB1450EFDC8610341D9410
-	echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
-	sudo apt-get update -y
-	sudo apt-get install -y spotify-client
+	sudo snap install spotify
 discord:
 	wget 'https://discordapp.com/api/download?platform=linux&format=deb' -o discord.deb
 	sudo dpkg -i discord.deb
@@ -190,8 +187,6 @@ docker:
 	sudo apt-add-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
 	sudo apt-get update
 	sudo apt-get install docker-ce
-
-
 
 # browsers >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 google_chrome:
