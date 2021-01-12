@@ -1,16 +1,23 @@
 #!/bin/bash
 raw=`cat /sys/class/backlight/intel_backlight/brightness`
 
+if [ $BLOCK_BUTTON == 1 ]; then
+	if [ `pgrep redshift` ]; then
+		pkill redshift
+	else
+		redshift > /dev/null &
+	fi
+fi
+
 if [ `pgrep redshift` ]; then
 	icon="<span color='white'><b>🌙</b></span>"
-	if [ $BLOCK_BUTTON == 1 ]; then
-		pkill redshift
-	fi
 else
-	if [ $BLOCK_BUTTON == 1 ]; then
-		redshift&
-	fi
 	icon="<span color='white'><b>☀</b></span>"
 fi
-brightness=$((raw / 10 + 10))
-echo "$icon $brightness%"
+
+if [[ "$raw" == "" ]]; then
+	echo "$icon 100%"
+else
+	brightness=$(($raw / 10 + 10))
+	echo "$icon $brightness"
+fi
