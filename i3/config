@@ -26,22 +26,22 @@ exec_always xinput set-prop 13 292 1 1
 exec_always xinput set-prop 14 290 -111 -111
 exec_always xinput set-prop 14 292 1 1
 
-# clone monitor
-exec_always pkill screen_watcher; ~/.config/i3/scripts/screen_watcher &
+# watchers for monitors and downloads
+exec_always pkill screen_watcher; ~/.config/i3/scripts/misc/screen_watcher
+exec_always pkill download_watcher; ~/.config/i3/scripts/misc/download_watcher
 
 # compton & download_watcher
 exec_always pkill compton; compton --config ~/.config/i3/compton.conf
-exec_always pkill feh; feh --bg-fill ~/Pictures/Background.jpg
-exec_always pkill download_watcher; bash ~/.config/i3/scripts/download_watcher.sh
+exec_always feh --bg-fill ~/Pictures/Background.jpg
 exec_always nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
-exec_always pkill nm-applet; nm-applet
+exec_always nm-applet
 exec_always --no-startup-id autotiling
 
 # i3 reload/restart/quit + lock & bar settings
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Escape  exec bash ~/.config/i3/scripts/misc/lock.sh
+bindsym $mod+Escape  exec ~/.config/i3/scripts/misc/lock
 
 bar {
   status_command SCRIPT_DIR=~/.config/i3/scripts i3blocks -c ~/.config/i3/i3blocks.conf
@@ -90,8 +90,8 @@ bindsym $mod+c       exec "google-chrome"
 bindsym $mod+s       exec "slack"
 bindsym $mod+t       exec "notes-up"
 bindsym $mod+comma   exec "gnome-control-center"
-bindsym $mod+h       exec "pantheon-files"
-bindsym $mod+d       exec "pantheon-files Downloads"
+bindsym $mod+h       exec "io.elementary.files"
+bindsym $mod+d       exec "io.elementary.files Downloads"
 
 # screenshots
 bindsym Print        exec "shutter -s"
@@ -100,9 +100,9 @@ bindsym $mod+Print   exec "shutter -w"
 
 # spotify
 bindsym $mod+Ctrl+s     exec spotify
-bindsym $mod+Ctrl+Right exec bash ~/.config/i3/scripts/spotify/spotify_exec Next
-bindsym $mod+Ctrl+Left  exec bash ~/.config/i3/scripts/spotify/spotify_exec Previous
-bindsym $mod+Ctrl+space exec bash ~/.config/i3/scripts/spotify/spotify_exec PlayPause
+bindsym $mod+Ctrl+Right exec ~/.config/i3/scripts/spotify/spotify_exec Next
+bindsym $mod+Ctrl+Left  exec ~/.config/i3/scripts/spotify/spotify_exec Previous
+bindsym $mod+Ctrl+space exec ~/.config/i3/scripts/spotify/spotify_exec PlayPause
 bindsym $mod+Ctrl+Up    exec amixer -D pulse sset Master 10%+
 bindsym $mod+Ctrl+Down  exec amixer -D pulse sset Master 10%-
 

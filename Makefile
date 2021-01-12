@@ -93,6 +93,8 @@ defaults:
 	# ccat
 	go get -u github.com/jingweno/ccat
 	sudo npm install -g @rafaelrinaldi/whereami
+	# for download-watcher
+	sudo apt-get install inotify-tools
 font-awesome:
 	curl https://use.fontawesome.com/releases/v5.2.0/fontawesome-free-5.2.0-desktop.zip -o fa.zip
 	unzip fa.zip
