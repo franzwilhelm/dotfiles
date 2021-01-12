@@ -177,3 +177,7 @@ assign [instance="code"] $ws2
 assign [instance="x-terminal-emulator"] $ws3
 assign [instance="slack"] $ws4
 for_window [instance="spotify"] move to workspace $ws5
+
+for_window [class=".*"] border pixel 0
+smart_gaps on
+gaps inner 10
