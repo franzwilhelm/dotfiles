@@ -28,6 +28,7 @@ programming_languages:
 	make node
 	make golang
 	make scheme
+	make python
 editors:
 	make atom
 	make intellij
@@ -116,7 +117,9 @@ i3wm:
 	sudo apt-get install -y arandr
 	sudo apt-get install -y rofi
 	sudo apt-get install -y compton
+	pip3 install autotiling
 	make dunst-notifications
+
 dunst-notifications:
 	sudo apt-get install -y libdbus-glib-1-dev libnotify-dev libxinerama-dev libxrandr-dev libxss-dev glibc-source libsdl-pango-dev libgtk-3-dev
 	git clone https://github.com/dunst-project/dunst.git /tmp/dunst

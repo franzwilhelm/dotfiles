@@ -35,6 +35,7 @@ exec_always pkill feh; feh --bg-fill ~/Pictures/Background.jpg
 exec_always pkill download_watcher; bash ~/.config/i3/scripts/download_watcher.sh
 exec_always nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
 exec_always pkill nm-applet; nm-applet
+exec_always --no-startup-id autotiling
 
 # i3 reload/restart/quit + lock & bar settings
 bindsym $mod+Shift+c reload
