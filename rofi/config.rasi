@@ -14,8 +14,16 @@ configuration {
   color-active: "#00ff00" ;
   color-window: "#21252b";
 }
-#window {
-  border-radius: 5px;
+
+window {
+  padding: 400px 600px 400px 600px;
+  transparency: "real";
+  fullscreen: true;
+  background-color: #00000025;
+}
+
+mainbox {
+  border-radius: 10px;
 }
 
 * {
@@ -23,7 +31,6 @@ configuration {
   border-color: #2e343f;
   text-color: #ffffff;
   spacing: 0;
-  border-radius: 5px;
 }
 
 inputbar {
@@ -53,7 +60,7 @@ listview {
 }
 
 element {
-  padding: 16px;
+  padding: 20px 10px 5px 10px;
   border-radius: 10px;
   margin: 5px 10px 5px 10px;
 }
