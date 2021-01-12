@@ -1,6 +1,6 @@
 #!/bin/bash
-raw=`cat /sys/class/backlight/intel_backlight/brightness`
 
+# Check for user click
 if [ $BLOCK_BUTTON == 1 ]; then
 	if [ `pgrep redshift` ]; then
 		pkill redshift
@@ -9,11 +9,15 @@ if [ $BLOCK_BUTTON == 1 ]; then
 	fi
 fi
 
+# Determine icon
 if [ `pgrep redshift` ]; then
 	icon="<span color='white'><b>🌙</b></span>"
 else
 	icon="<span color='white'><b>☀</b></span>"
 fi
+
+# Display brightness and correct icon
+raw=`cat /sys/class/backlight/intel_backlight/brightness`
 
 if [[ "$raw" == "" ]]; then
 	echo "$icon 100%"
