@@ -27,14 +27,14 @@ exec_always xinput set-prop 14 290 -111 -111
 exec_always xinput set-prop 14 292 1 1
 
 # clone monitor
-exec_always ~/.config/i3/scripts/screen_watcher &
+exec_always pkill screen_watcher; ~/.config/i3/scripts/screen_watcher &
 
 # compton & download_watcher
-exec_always compton --config ~/.config/i3/compton.conf
-exec_always feh --bg-fill ~/Pictures/Background.jpg
-exec_always bash ~/.config/i3/scripts/download_watcher.sh
+exec_always pkill compton; compton --config ~/.config/i3/compton.conf
+exec_always pkill feh; feh --bg-fill ~/Pictures/Background.jpg
+exec_always pkill download_watcher; bash ~/.config/i3/scripts/download_watcher.sh
 exec_always nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
-exec_always nm-applet
+exec_always pkill nm-applet; nm-applet
 
 # i3 reload/restart/quit + lock & bar settings
 bindsym $mod+Shift+c reload
@@ -63,8 +63,6 @@ bar {
 ###########################################
 #             FUNCTION KEYS               #
 ###########################################
-# exec_always gksu chown franz /sys/class/backlight/intel_backlight/brightness
-# exec_always gksu chown franz /sys/class/leds/asus::kbd_backlight/brightness
 exec echo 900 > /sys/class/backlight/intel_backlight/brightness
 
 #audio
