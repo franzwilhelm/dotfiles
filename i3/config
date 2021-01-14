@@ -31,11 +31,11 @@ exec_always xinput set-prop 14 290 -111 -111
 exec_always xinput set-prop 14 292 1 1
 
 # watchers for monitors and downloads
-exec_always pkill screen_watcher; ~/.config/i3/scripts/misc/screen_watcher
-exec_always pkill download_watcher; ~/.config/i3/scripts/misc/download_watcher
+exec_always killall screen_watcher; ~/.config/i3/scripts/misc/screen_watcher
+exec_always killall download_watcher; ~/.config/i3/scripts/misc/download_watcher
 
-# compton & download_watcher
-exec_always pkill compton; compton --config ~/.config/i3/compton.conf
+# compton
+exec_always killall compton; compton --config ~/.config/i3/compton.conf
 exec_always feh --bg-fill ~/Pictures/Background.jpg
 exec_always nvidia-settings --assign CurrentMetaMode="nvidia-auto-select +0+0 { ForceFullCompositionPipeline = On }"
 exec_always nm-applet
