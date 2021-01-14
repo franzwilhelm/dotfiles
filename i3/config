@@ -144,6 +144,9 @@ mode "resize" {
 ###########################################
 #               WORKSPACES                #
 ###########################################
+
+focus_on_window_activation focus
+
 # determine screen workspaces
 workspace $ws1 output DP-1
 workspace $ws2 output DP-1
