@@ -20,6 +20,10 @@ set $mod          Mod4
 floating_modifier $mod
 client.focused    $bg-color $bg-color #ffffff $bg-color   $bg-color
 
+# border radius (exprimental from fork)
+border_radius 7
+bindsym $mod+Shift+space border pixel 0
+
 # mousepad natural scrolling and horizontal scrolling
 exec_always xinput set-prop 13 290 -111 -111
 exec_always xinput set-prop 13 292 1 1
@@ -179,5 +183,4 @@ assign [instance="slack"] $ws4
 for_window [instance="spotify"] move to workspace $ws5
 
 for_window [class=".*"] border pixel 0
-smart_gaps on
 gaps inner 10

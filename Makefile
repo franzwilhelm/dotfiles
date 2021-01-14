@@ -110,7 +110,7 @@ eOS:
 	# DCONF-EDITOR - for editing registry
 	sudo apt-get install -y dconf-editor
 i3wm:
-	sudo apt-get install -y i3
+	make i3-gaps
 	sudo apt-get install -y scrot
 	sudo apt-get install -y i3lock
 	sudo apt-get install -y i3blocks
@@ -121,6 +121,23 @@ i3wm:
 	sudo apt-get install -y compton
 	pip3 install autotiling
 	make dunst-notifications
+i3-gaps:
+	sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev \
+	libxcb-util0-dev libxcb-icccm4-dev libyajl-dev \
+	libstartup-notification0-dev libxcb-randr0-dev \
+	libev-dev libxcb-cursor-dev libxcb-xinerama0-dev \
+	libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
+	python3 python3-pip python3-setuptools \
+ 	python3-wheel ninja-build \
+	autoconf libxcb-xrm-dev
+	git clone https://github.com/resloved/i3 /tmp/i3gaps
+	cd /tmp/i3gaps && \
+	autoreconf --force --install && \
+	rm -rf build/ && \
+	mkdir -p build && cd build/ && \
+	../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers && \
+	make && \
+	sudo make install
 
 dunst-notifications:
 	sudo apt-get install -y libdbus-glib-1-dev libnotify-dev libxinerama-dev libxrandr-dev libxss-dev glibc-source libsdl-pango-dev libgtk-3-dev
