@@ -96,7 +96,7 @@ bindsym $mod+s       exec "slack"
 bindsym $mod+t       exec "notes-up"
 bindsym $mod+comma   exec "gnome-control-center"
 bindsym $mod+h       exec "io.elementary.files"
-bindsym $mod+d       exec "io.elementary.files Downloads"
+bindsym $mod+d       exec "discord"
 
 # screenshots
 bindsym Print        exec "shutter -s"
@@ -180,7 +180,7 @@ assign [instance="google-chrome"] $ws1
 assign [instance="atom"] $ws2
 assign [instance="code"] $ws2
 assign [instance="x-terminal-emulator"] $ws3
-assign [instance="slack"] $ws4
+assign [instance="discord"] $ws4
 for_window [instance="spotify"] move to workspace $ws5
 
 for_window [class=".*"] border pixel 0
