@@ -68,6 +68,7 @@ profile() {
   cd -
 }
 
+alias untar="tar -zxvf $@"
 # k8s
 alias k8s="kubectl $@"
 alias k="kubectl $@"
