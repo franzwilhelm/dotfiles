@@ -109,5 +109,11 @@ if [ -n "$ZSH_VERSION" ]; then
   terminalBackground "rgba(37, 46, 50, 0.95)"
 fi
 
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+}
+
 echo "Profile successfully loaded"
 echo "UNIX time: $(date +%s)"
