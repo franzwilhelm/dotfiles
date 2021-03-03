@@ -161,8 +161,8 @@ discord:
 golang:
 	mkdir -p ~/PROGRAMMERING/GO
 	curl -O https://storage.googleapis.com/golang/$(shell curl -s https://golang.org/dl/ | grep -oPm 1 'go[\d\.]+\d').linux-amd64.tar.gz
-	sudo tar -C /usr/local -xzf $(GO_TAR)
-	sudo rm $(GO_TAR)
+	sudo tar -C /usr/local -xzf $(shell curl -s https://golang.org/dl/ | grep -oPm 1 'go[\d\.]+\d').linux-amd64.tar.gz
+	sudo rm $(shell curl -s https://golang.org/dl/ | grep -oPm 1 'go[\d\.]+\d').linux-amd64.tar.gz
 node:
 	sudo apt-get install -y nodejs npm
 	sudo npm i -g npm
