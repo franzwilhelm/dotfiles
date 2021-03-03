@@ -1,5 +1,5 @@
 #!/bin/bash
-export ZSH=/home/franz/.oh-my-zsh
+export ZSH=/home/$USER/.oh-my-zsh
 export ZSH_CUSTOM=$ZSH/custom
 export force_color_prompt=yes
 
