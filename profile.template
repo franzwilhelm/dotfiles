@@ -16,18 +16,21 @@ if [ -f "$SECRETS" ]; then
 fi
 
 # generic environment variables
-export PATH="/usr/local/go/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
-export PATH="/snap/bin:$PATH"
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
-export PATH="/usr/local/MATLAB/R2017b/bin:$PATH"
+add_to_path() {
+  export PATH=$PATH:$@
+}
+
+add_to_path $GOROOT/bin
+add_to_path $GOPATH/bin
+add_to_path $GOPATH/bin
+add_to_path $HOME/bin:$HOME/.local/bin
+add_to_path /snap/bin
 
 export DOTFILES_DIR="$HOME/.config"
 export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
 export PROJECTS="$HOME/PROGRAMMERING/projects"
 
 export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
-alias gcc=gcc-6
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/PROGRAMMERING/GO
 export EDITOR="/usr/bin/atom --wait"
