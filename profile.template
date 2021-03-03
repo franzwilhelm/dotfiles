@@ -17,14 +17,14 @@ fi
 
 # generic environment variables
 add_to_path() {
-  export PATH=$PATH:$@
+  export PATH=$PATH:$1
 }
 
-add_to_path $GOROOT/bin
-add_to_path $GOPATH/bin
-add_to_path $GOPATH/bin
-add_to_path $HOME/bin:$HOME/.local/bin
-add_to_path /snap/bin
+add_to_path "$GOROOT/bin"
+add_to_path "$GOPATH/bin"
+add_to_path "$GOPATH/bin"
+add_to_path "$HOME/bin:$HOME/.local/bin"
+add_to_path "/snap/bin"
 
 export DOTFILES_DIR="$HOME/.config"
 export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
