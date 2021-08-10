@@ -1,4 +1,3 @@
-SHELL := /usr/bin/zsh
 export FLASH_TAR=flash_player_ppapi_linux.x86_64.tar.gz
 export ZSH_CUSTOM=~/.oh-my-zsh/custom
 
@@ -56,7 +55,6 @@ git:
 	git config --global user.email "franz.vonderlippe@gmail.com"
 	git config --global user.name "Franz von der Lippe"
 zsh:
-	sudo apt-get install zsh
 	curl -fsSLo install-zsh.sh "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
 	chmod +x $(shell pwd)/install-zsh.sh
 	RUNZSH=no ./install-zsh.sh
@@ -67,6 +65,7 @@ zsh:
 	git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM}/plugins/zsh-history-substring-search
 	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
+	cp zshrc.template ~/.zshrc
 profile:
 	cp profile.template ~/.profile
 	cp zshrc.template ~/.zshrc
