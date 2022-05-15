@@ -20,20 +20,18 @@ add_to_path() {
   export PATH=$PATH:$1
 }
 
+export DOTFILES_DIR="$HOME/.config"
+export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
+export PROJECTS="$HOME/PROGRAMMERING/projects"
+export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
+export GOROOT="/opt/homebrew/Cellar/go/1.17.6/libexec/"
+
 add_to_path "$GOROOT/bin"
 add_to_path "$GOPATH/bin"
 add_to_path "$GOPATH/bin"
 add_to_path "$HOME/bin:$HOME/.local/bin"
 add_to_path "/snap/bin"
-
-export DOTFILES_DIR="$HOME/.config"
-export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
-export PROJECTS="$HOME/PROGRAMMERING/projects"
-
-export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/PROGRAMMERING/GO
-export EDITOR="/usr/bin/atom --wait"
+add_to_path "/opt/homebrew/bin"
 
 # shortcuts
 alias highlight="ack --passthru"
@@ -46,14 +44,12 @@ alias py3="python3"
 alias sc="cd $SCRIPTS_DIR"
 alias terminalBackground="gsettings set io.elementary.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
-alias plantuml="java -jar $HOME/PROGRAMMERING/plantuml/plantuml.jar $@";
-
-
+alias plantuml="java -jar $HOME/PROGRAMMERING/plantuml/plantuml.jar $@"
+alias docker-kill="docker kill $(docker ps -q)"
 # git shortcuts
 alias gmne="gm --no-edit --no-ff $@"
 alias gpt="git push && git push --tags"
 alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
-
 
 # config files
 alias secrets="$EDITOR $HOME/.secrets; source $HOME/.profile"
@@ -63,60 +59,55 @@ alias snippets="aa $HOME/.atom/snippets.cson"
 profile() {
   cd $DOTFILES_DIR
   git pull origin master &&
-  atom --wait profile.template &&
-  git add "profile.template" &&
-  git commit --edit &&
-  git push &&
-  make profile
+    atom --wait profile.template &&
+    git add "profile.template" &&
+    git commit --edit &&
+    git push &&
+    make profile
   cd -
 }
 
 alias untar="tar -zxvf $@"
-# k8s
-alias k8s="kubectl $@"
-alias k="kubectl $@"
-alias pods="kubectl get pods"
-alias watchpods="watch kubectl get pods"
-podname() {
-  name=$1
-  shift
-  kubectl get pod -lname=$name $@
-}
-podlog() {
-  name=$1
-  shift
-  podhash=`podname $name | tail -1 | xargs | cut -f 1 -d ' '`
-  kubectl logs $podhash -f $@ --container $name
-}
-podyaml() {
-  podname $1 -oyaml
-}
 
 # network & postgres
 alias fixnet="sudo systemctl restart NetworkManager.service"
 alias pg="sudo -u postgres psql"
 
 github-open() {
-	uri="https://github.com/"`git remote -v | grep -Pi $1 | grep -oPi '((?<=github.com:)|(?<=github.com/))\w*\/.*(?=\.git \(fetch\))'`
-	google-chrome $uri
+  uri="https://github.com/"$(git remote -v | grep -Pi $1 | grep -oPi '((?<=github.com:)|(?<=github.com/))\w*\/.*(?=\.git \(fetch\))')
+  google-chrome $uri
 }
 
 prune_git() {
-  git fetch -p \
-    && git branch --merged >/tmp/merged-branches \
-    && vim /tmp/merged-branches \
-    && xargs git branch -d </tmp/merged-branches
+  git fetch -p &&
+    git branch --merged >/tmp/merged-branches &&
+    vim /tmp/merged-branches &&
+    xargs git branch -d </tmp/merged-branches
 }
 
-if [ -n "$ZSH_VERSION" ]; then
-  terminalBackground "rgba(37, 46, 50, 0.95)"
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+if [ $? -eq 0 ]; then
+  eval "$__conda_setup"
+else
+  if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+    . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+  else
+    export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+  fi
 fi
+unset __conda_setup
+# <<< conda initialize <<<
 
-unalias z 2> /dev/null
+# if [ -n "$ZSH_VERSION" ]; then
+#   terminalBackground "rgba(37, 46, 50, 0.95)"
+# fi
+
+unalias z 2>/dev/null
 z() {
   [ $# -gt 0 ] && _z "$*" && return
   cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
 
-echo "Profile successfully loaded"
-echo "UNIX time: $(date +%s)"
+echo "$(date +%d.%m.%Y) | $(date +%T)"

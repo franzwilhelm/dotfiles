@@ -5,15 +5,16 @@ export force_color_prompt=yes
 
 ZSH_THEME="robbyrussell"
 plugins=(
-  git
-  zsh-autosuggestions
-  colored-man-pages
-  alias-tips
-  zsh-syntax-highlighting
-  history-substring-search
+    git
+    zsh-autosuggestions
+    colored-man-pages
+    alias-tips
+    zsh-syntax-highlighting
+    history-substring-search
 )
 
 source $ZSH/oh-my-zsh.sh
+source $HOME/.profile
 
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
