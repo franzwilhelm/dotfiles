@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
@@ -26,46 +26,44 @@ export PROJECTS="$HOME/PROGRAMMERING/projects"
 export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
 export GOROOT="/opt/homebrew/Cellar/go/1.17.6/libexec/"
 
+add_to_path "/opt/homebrew/opt/llvm/bin"
 add_to_path "$GOROOT/bin"
 add_to_path "$GOPATH/bin"
 add_to_path "$GOPATH/bin"
 add_to_path "$HOME/bin:$HOME/.local/bin"
 add_to_path "/snap/bin"
 add_to_path "/opt/homebrew/bin"
-
+add_to_path "/usr/bin"
 # shortcuts
+alias dk="docker kill $(docker ps -q)"
 alias highlight="ack --passthru"
 alias c="clear"
 alias p="cd $PROJECTS"
-alias a="atom"
-alias aa="atom -a"
 alias py="python"
 alias py3="python3"
+alias vim="nvim"
 alias sc="cd $SCRIPTS_DIR"
 alias terminalBackground="gsettings set io.elementary.terminal.settings background $@"
 alias gogit="cd $GOPATH/src/github.com"
 alias plantuml="java -jar $HOME/PROGRAMMERING/plantuml/plantuml.jar $@"
-alias docker-kill="docker kill $(docker ps -q)"
 # git shortcuts
 alias gmne="gm --no-edit --no-ff $@"
 alias gpt="git push && git push --tags"
 alias tags="glo | grep -oP '(?<=tag: ).*(?=\))'"
 
 # config files
-alias secrets="$EDITOR $HOME/.secrets; source $HOME/.profile"
+alias secrets="$EDITOR $HOME/.secrets"
 alias i3conf="atom $DOTFILES_DIR/i3"
 alias makeconf="vim $DOTFILES_DIR/Makefile"
 alias snippets="aa $HOME/.atom/snippets.cson"
-profile() {
-  cd $DOTFILES_DIR
-  git pull origin master &&
-    atom --wait profile.template &&
-    git add "profile.template" &&
-    git commit --edit &&
-    git push &&
-    make profile
-  cd -
-}
+alias zshrc="vim $DOTFILES_DIR/shell/zshrc"
+alias profile="vim $DOTFILES_DIR/shell/profile"
+alias nconf="vim $DOTFILES_DIR/nvim/init.lua"
+
+# eza as ls replacement
+alias ls="eza --icons --classify --colour=auto --sort=type --modified --created --git --binary --group"
+alias la="ls -a"
+alias ll="ls -al"
 
 alias untar="tar -zxvf $@"
 
@@ -85,29 +83,8 @@ prune_git() {
     xargs git branch -d </tmp/merged-branches
 }
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
-if [ $? -eq 0 ]; then
-  eval "$__conda_setup"
-else
-  if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-    . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-  else
-    export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
-  fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
 # if [ -n "$ZSH_VERSION" ]; then
 #   terminalBackground "rgba(37, 46, 50, 0.95)"
 # fi
 
 unalias z 2>/dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-}
-
-echo "$(date +%d.%m.%Y) | $(date +%T)"

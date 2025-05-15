@@ -1,12 +1,10 @@
 export FLASH_TAR=flash_player_ppapi_linux.x86_64.tar.gz
-export ZSH_CUSTOM=~/.oh-my-zsh/custom
 
 # done with make pre_setup SHELL=/bin/bash
 pre_setup:
 	sudo apt-get update
 	make git
 	make zsh
-	make profile
 
 everything:
 	make setup
@@ -55,21 +53,7 @@ git:
 	git config --global user.email "franz.vonderlippe@gmail.com"
 	git config --global user.name "Franz von der Lippe"
 zsh:
-	curl -fsSLo install-zsh.sh "https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh"
-	chmod +x $(shell pwd)/install-zsh.sh
-	RUNZSH=no ./install-zsh.sh
-	rm $(shell pwd)/install-zsh.sh
-	git clone https://github.com/denysdovhan/spaceship-prompt.git ${ZSH_CUSTOM}/themes/spaceship-prompt
-	ln -s ${ZSH_CUSTOM}/themes/spaceship-prompt/spaceship.zsh-theme ${ZSH_CUSTOM}/themes/spaceship.zsh-theme
-	git clone https://github.com/djui/alias-tips.git ${ZSH_CUSTOM}/plugins/alias-tips
-	git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM}/plugins/zsh-history-substring-search
-	git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
-	cp zshrc.template ~/.zshrc
-profile:
-	cp profile.template ~/.profile
-	cp zshrc.template ~/.zshrc
-	zsh
+	./setup.sh
 defaults:
 	sudo apt-get install -y snapd
 	# make add-apt-repository possible etc...
