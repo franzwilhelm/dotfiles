@@ -65,6 +65,7 @@ fi
 
 # nvim init.lua
 if [ ! -L $HOME/.config/nvim/init.lua ]; then
+  mkdir -p $HOME/.config/nvim
   mv $HOME/.config/nvim/init.lua $HOME/.config/nvim/init.lua.old
   echo "Backed up existing init.lua to init.lua.old"
   ln -s $DOTFILES_DIR/nvim/init.lua $HOME/.config/nvim/init.lua
