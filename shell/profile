@@ -1,4 +1,4 @@
-#!/bin/zsh
+#importedFromCountro!/bin/zsh
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
@@ -20,7 +20,7 @@ add_to_path() {
   export PATH=$PATH:$1
 }
 
-export DOTFILES_DIR="$HOME/.config"
+export DOTFILES_DIR="$HOME/.config/dotfiles"
 export SCRIPTS_DIR="$DOTFILES_DIR/i3/scripts"
 export PROJECTS="$HOME/PROGRAMMERING/projects"
 export LD_LIBRARY_PATH=$GOPATH/src/github.com/zubairhamed/canopus/openssl/
